@@ -1,0 +1,247 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Cloud Compute Instances &mdash; SoftLayer API Python Client 2.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SoftLayer API Python Client 2.1.0 documentation" href="../../index.html" />
+    <link rel="next" title="DNS" href="dns.html" />
+    <link rel="prev" title="Client" href="../client.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dns.html" title="DNS"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../client.html" title="Client"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-SoftLayer.CCI">
+<span id="cloud-compute-instances"></span><span id="cci"></span><h1>Cloud Compute Instances<a class="headerlink" href="#module-SoftLayer.CCI" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="softlayer-cci">
+<h2>SoftLayer.CCI<a class="headerlink" href="#softlayer-cci" title="Permalink to this headline">¶</a></h2>
+<p>CCI Manager/helpers</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body"><ol class="first loweralpha simple" start="3">
+<li>2013, SoftLayer Technologies, Inc. All rights reserved.</li>
+</ol>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body"><p class="first last">BSD, see LICENSE for more details.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="SoftLayer.CCI.CCICreateMissingRequired">
+<em class="property">exception </em><tt class="descclassname">SoftLayer.CCI.</tt><tt class="descname">CCICreateMissingRequired</tt><a class="reference internal" href="../../_modules/SoftLayer/CCI.html#CCICreateMissingRequired"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.CCI.CCICreateMissingRequired" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="SoftLayer.CCI.CCICreateMutuallyExclusive">
+<em class="property">exception </em><tt class="descclassname">SoftLayer.CCI.</tt><tt class="descname">CCICreateMutuallyExclusive</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/CCI.html#CCICreateMutuallyExclusive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.CCI.CCICreateMutuallyExclusive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="SoftLayer.CCI.CCIManager">
+<em class="property">class </em><tt class="descclassname">SoftLayer.CCI.</tt><tt class="descname">CCIManager</tt><big>(</big><em>client</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/CCI.html#CCIManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.CCI.CCIManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manage CCIs</p>
+<dl class="method">
+<dt id="SoftLayer.CCI.CCIManager.cancel_instance">
+<tt class="descname">cancel_instance</tt><big>(</big><em>id</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/CCI.html#CCIManager.cancel_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.CCI.CCIManager.cancel_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cancel an instance immediately, deleting all its data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>integer</em>) &#8211; the instance ID to cancel</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="SoftLayer.CCI.CCIManager.create_instance">
+<tt class="descname">create_instance</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/CCI.html#CCIManager.create_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.CCI.CCIManager.create_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>see _generate_create_dict</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="SoftLayer.CCI.CCIManager.get_create_options">
+<tt class="descname">get_create_options</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/CCI.html#CCIManager.get_create_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.CCI.CCIManager.get_create_options" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="SoftLayer.CCI.CCIManager.get_instance">
+<tt class="descname">get_instance</tt><big>(</big><em>id</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/CCI.html#CCIManager.get_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.CCI.CCIManager.get_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get details about a CCI instance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>integer</em>) &#8211; the instance ID</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="SoftLayer.CCI.CCIManager.list_instances">
+<tt class="descname">list_instances</tt><big>(</big><em>hourly=True</em>, <em>monthly=True</em>, <em>tags=None</em>, <em>cpus=None</em>, <em>memory=None</em>, <em>hostname=None</em>, <em>domain=None</em>, <em>local_disk=None</em>, <em>datacenter=None</em>, <em>nic_speed=None</em>, <em>public_ip=None</em>, <em>private_ip=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/CCI.html#CCIManager.list_instances"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.CCI.CCIManager.list_instances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve a list of all CCIs on the account.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>hourly</strong> (<em>boolean</em>) &#8211; include hourly instances</li>
+<li><strong>monthly</strong> (<em>boolean</em>) &#8211; include monthly instances</li>
+<li><strong>tags</strong> (<em>list</em>) &#8211; filter based on tags</li>
+<li><strong>cpus</strong> (<em>integer</em>) &#8211; filter based on number of CPUS</li>
+<li><strong>memory</strong> (<em>integer</em>) &#8211; filter based on amount of memory</li>
+<li><strong>hostname</strong> (<em>string</em>) &#8211; filter based on hostname</li>
+<li><strong>domain</strong> (<em>string</em>) &#8211; filter based on domain</li>
+<li><strong>local_disk</strong> (<em>string</em>) &#8211; filter based on local_disk</li>
+<li><strong>datacenter</strong> (<em>string</em>) &#8211; filter based on datacenter</li>
+<li><strong>nic_speed</strong> (<em>integer</em>) &#8211; filter based on network speed (in MBPS)</li>
+<li><strong>public_ip</strong> (<em>string</em>) &#8211; filter based on public ip address</li>
+<li><strong>private_ip</strong> (<em>string</em>) &#8211; filter based on private ip address</li>
+<li><strong>**kwargs</strong> (<em>dict</em>) &#8211; response-level arguments (limit, offset, etc.)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="SoftLayer.CCI.CCIManager.reload_instance">
+<tt class="descname">reload_instance</tt><big>(</big><em>id</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/CCI.html#CCIManager.reload_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.CCI.CCIManager.reload_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform an OS reload of an instance with its current configuration.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>integer</em>) &#8211; the instance ID to reload</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="SoftLayer.CCI.CCIManager.verify_create_instance">
+<tt class="descname">verify_create_instance</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/CCI.html#CCIManager.verify_create_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.CCI.CCIManager.verify_create_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>see _generate_create_dict</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Cloud Compute Instances</a><ul>
+<li><a class="reference internal" href="#softlayer-cci">SoftLayer.CCI</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../client.html"
+                        title="previous chapter">Client</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dns.html"
+                        title="next chapter">DNS</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/api/managers/cci.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dns.html" title="DNS"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../client.html" title="Client"
+             >previous</a> |</li>
+        <li><a href="../../index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, SoftLayer Technologies, Inc..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

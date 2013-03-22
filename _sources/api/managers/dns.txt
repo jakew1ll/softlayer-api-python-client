@@ -1,0 +1,8 @@
+.. _dns:
+
+DNS
+===
+
+.. automodule:: SoftLayer.DNS
+   :members:
+   :undoc-members:

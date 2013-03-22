@@ -1,0 +1,315 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>DNS &mdash; SoftLayer API Python Client 2.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SoftLayer API Python Client 2.1.0 documentation" href="../../index.html" />
+    <link rel="next" title="Firewall" href="firewall.html" />
+    <link rel="prev" title="Cloud Compute Instances" href="cci.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="firewall.html" title="Firewall"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cci.html" title="Cloud Compute Instances"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="dns">
+<span id="id1"></span><h1>DNS<a class="headerlink" href="#dns" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-SoftLayer.DNS"></span><div class="section" id="softlayer-dns">
+<h2>SoftLayer.DNS<a class="headerlink" href="#softlayer-dns" title="Permalink to this headline">¶</a></h2>
+<p>DNS Manager/helpers</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body"><ol class="first loweralpha simple" start="3">
+<li>2013, SoftLayer Technologies, Inc. All rights reserved.</li>
+</ol>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body"><p class="first last">BSD, see LICENSE for more details.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="SoftLayer.DNS.DNSZoneNotFound">
+<em class="property">exception </em><tt class="descclassname">SoftLayer.DNS.</tt><tt class="descname">DNSZoneNotFound</tt><a class="reference internal" href="../../_modules/SoftLayer/DNS.html#DNSZoneNotFound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.DNS.DNSZoneNotFound" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="SoftLayer.DNS.DNSManager">
+<em class="property">class </em><tt class="descclassname">SoftLayer.DNS.</tt><tt class="descname">DNSManager</tt><big>(</big><em>client</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/DNS.html#DNSManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.DNS.DNSManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manage DNS zones.</p>
+<dl class="method">
+<dt id="SoftLayer.DNS.DNSManager.create_record">
+<tt class="descname">create_record</tt><big>(</big><em>id</em>, <em>record</em>, <em>type</em>, <em>data</em>, <em>ttl=60</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/DNS.html#DNSManager.create_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.DNS.DNSManager.create_record" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a resource record on a domain.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>integer</em>) &#8211; the domain&#8217;s ID</li>
+<li><strong>record</strong> &#8211; the name of the record to add</li>
+<li><strong>type</strong> &#8211; the type of record (A, AAAA, CNAME, MX, SRV, TXT, etc.)</li>
+<li><strong>data</strong> &#8211; the record&#8217;s value</li>
+<li><strong>ttl</strong> (<em>integer</em>) &#8211; the TTL or time-to-live value (default: 60)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="SoftLayer.DNS.DNSManager.create_zone">
+<tt class="descname">create_zone</tt><big>(</big><em>domain</em>, <em>serial=None</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/DNS.html#DNSManager.create_zone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.DNS.DNSManager.create_zone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a zone for the specified domain.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>domain</strong> &#8211; the domain/zone name to create</li>
+<li><strong>serial</strong> &#8211; serial value on the zone (default: strftime(%Y%m%d01))</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="SoftLayer.DNS.DNSManager.delete_record">
+<tt class="descname">delete_record</tt><big>(</big><em>recordid</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/DNS.html#DNSManager.delete_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.DNS.DNSManager.delete_record" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a resource record by its ID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>integer</em>) &#8211; the record&#8217;s ID</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="SoftLayer.DNS.DNSManager.delete_zone">
+<tt class="descname">delete_zone</tt><big>(</big><em>id</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/DNS.html#DNSManager.delete_zone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.DNS.DNSManager.delete_zone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a zone by its ID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>integer</em>) &#8211; the zone ID to delete</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="SoftLayer.DNS.DNSManager.dump_zone">
+<tt class="descname">dump_zone</tt><big>(</big><em>id</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/DNS.html#DNSManager.dump_zone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.DNS.DNSManager.dump_zone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve a zone dump in BIND format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>integer</em>) &#8211; The zone/domain ID to dump</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="SoftLayer.DNS.DNSManager.edit_record">
+<tt class="descname">edit_record</tt><big>(</big><em>record</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/DNS.html#DNSManager.edit_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.DNS.DNSManager.edit_record" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update an existing record with the options provided. The provided
+dict must include an &#8216;id&#8217; key and value corresponding to the record
+that should be updated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>record</strong> (<em>dict</em>) &#8211; the record to update</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="SoftLayer.DNS.DNSManager.edit_zone">
+<tt class="descname">edit_zone</tt><big>(</big><em>zone</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/DNS.html#DNSManager.edit_zone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.DNS.DNSManager.edit_zone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update an existing zone with the options provided. The provided
+dict must include an &#8216;id&#8217; key and value corresponding to the zone that
+should be updated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>zone</strong> (<em>dict</em>) &#8211; the zone to update</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="SoftLayer.DNS.DNSManager.get_zone">
+<tt class="descname">get_zone</tt><big>(</big><em>domain</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/DNS.html#DNSManager.get_zone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.DNS.DNSManager.get_zone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a domain/zone and its records.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>domain</strong> &#8211; the domain/zone name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="SoftLayer.DNS.DNSManager.list_zones">
+<tt class="descname">list_zones</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/DNS.html#DNSManager.list_zones"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.DNS.DNSManager.list_zones" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve a list of all DNS zones.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>**kwargs</strong> (<em>dict</em>) &#8211; response-level arguments (limit, offset, etc.)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="SoftLayer.DNS.DNSManager.search_record">
+<tt class="descname">search_record</tt><big>(</big><em>domain</em>, <em>record</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/DNS.html#DNSManager.search_record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.DNS.DNSManager.search_record" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for records on a domain that match a specific name.
+Useful for validating whether a record exists or that it has the
+correct value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>domain</strong> &#8211; the domain/zone name in which to search.</li>
+<li><strong>record</strong> &#8211; the record name to search for</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">DNS</a><ul>
+<li><a class="reference internal" href="#softlayer-dns">SoftLayer.DNS</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="cci.html"
+                        title="previous chapter">Cloud Compute Instances</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="firewall.html"
+                        title="next chapter">Firewall</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/api/managers/dns.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="firewall.html" title="Firewall"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cci.html" title="Cloud Compute Instances"
+             >previous</a> |</li>
+        <li><a href="../../index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, SoftLayer Technologies, Inc..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+.. _metadata:
+
+Metadata
+========
+
+.. automodule:: SoftLayer.metadata
+   :members:
+   :undoc-members:
