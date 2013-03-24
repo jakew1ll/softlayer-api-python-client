@@ -1,8 +1,5 @@
 .. _cci:
 
-Cloud Compute Instances
-=======================
-
 .. automodule:: SoftLayer.CCI
    :members:
    :undoc-members:

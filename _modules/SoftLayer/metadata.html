@@ -68,30 +68,46 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;MetadataManager&quot;</span><span class="p">]</span>
 
+<span class="n">METADATA_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;backend_mac&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;BackendMacAddresses&#39;</span><span class="p">},</span>
+    <span class="s">&#39;datacenter&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;Datacenter&#39;</span><span class="p">},</span>
+    <span class="s">&#39;datacenter_id&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;DatacenterId&#39;</span><span class="p">},</span>
+    <span class="s">&#39;domain&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;Domain&#39;</span><span class="p">},</span>
+    <span class="s">&#39;frontend_mac&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;FrontendMacAddresses&#39;</span><span class="p">},</span>
+    <span class="s">&#39;fqdn&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;FullyQualifiedDomainName&#39;</span><span class="p">},</span>
+    <span class="s">&#39;hostname&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;Hostname&#39;</span><span class="p">},</span>
+    <span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;Id&#39;</span><span class="p">},</span>
+    <span class="s">&#39;primary_backend_ip&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;PrimaryBackendIpAddress&#39;</span><span class="p">},</span>
+    <span class="s">&#39;primary_ip&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;PrimaryIpAddress&#39;</span><span class="p">},</span>
+    <span class="s">&#39;primary_frontend_ip&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;PrimaryIpAddress&#39;</span><span class="p">},</span>
+    <span class="s">&#39;provision_state&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;ProvisionState&#39;</span><span class="p">},</span>
+    <span class="s">&#39;router&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;Router&#39;</span><span class="p">,</span> <span class="s">&#39;param_req&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">},</span>
+    <span class="s">&#39;tags&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;Tags&#39;</span><span class="p">},</span>
+    <span class="s">&#39;user_data&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;UserMetadata&#39;</span><span class="p">},</span>
+    <span class="s">&#39;user_metadata&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;UserMetadata&#39;</span><span class="p">},</span>
+    <span class="s">&#39;vlan_ids&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;VlanIds&#39;</span><span class="p">,</span> <span class="s">&#39;param_req&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">},</span>
+    <span class="s">&#39;vlans&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;Vlans&#39;</span><span class="p">,</span> <span class="s">&#39;param_req&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">},</span>
+<span class="p">}</span>
+<span class="n">METADATA_ATTRIBUTES</span> <span class="o">=</span> <span class="n">METADATA_MAPPING</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
 
 <div class="viewcode-block" id="MetadataManager"><a class="viewcode-back" href="../../api/managers/metadata.html#SoftLayer.metadata.MetadataManager">[docs]</a><span class="k">class</span> <span class="nc">MetadataManager</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Manages metadata. &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; Provides an interface for the metadata service. This provides metadata</span>
+<span class="sd">        about the resourse it is called from. See `METADATA_ATTRIBUTES` for</span>
+<span class="sd">        full list of attributes.</span>
 
-    <span class="n">attribs</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s">&#39;backend_mac&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;BackendMacAddresses&#39;</span><span class="p">},</span>
-        <span class="s">&#39;datacenter&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;Datacenter&#39;</span><span class="p">},</span>
-        <span class="s">&#39;datacenter_id&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;DatacenterId&#39;</span><span class="p">},</span>
-        <span class="s">&#39;domain&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;Domain&#39;</span><span class="p">},</span>
-        <span class="s">&#39;frontend_mac&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;FrontendMacAddresses&#39;</span><span class="p">},</span>
-        <span class="s">&#39;fqdn&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;FullyQualifiedDomainName&#39;</span><span class="p">},</span>
-        <span class="s">&#39;hostname&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;Hostname&#39;</span><span class="p">},</span>
-        <span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;Id&#39;</span><span class="p">},</span>
-        <span class="s">&#39;primary_backend_ip&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;PrimaryBackendIpAddress&#39;</span><span class="p">},</span>
-        <span class="s">&#39;primary_ip&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;PrimaryIpAddress&#39;</span><span class="p">},</span>
-        <span class="s">&#39;primary_frontend_ip&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;PrimaryIpAddress&#39;</span><span class="p">},</span>
-        <span class="s">&#39;provision_state&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;ProvisionState&#39;</span><span class="p">},</span>
-        <span class="s">&#39;router&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;Router&#39;</span><span class="p">,</span> <span class="s">&#39;param_req&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">},</span>
-        <span class="s">&#39;tags&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;Tags&#39;</span><span class="p">},</span>
-        <span class="s">&#39;user_data&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;UserMetadata&#39;</span><span class="p">},</span>
-        <span class="s">&#39;user_metadata&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;UserMetadata&#39;</span><span class="p">},</span>
-        <span class="s">&#39;vlan_ids&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;VlanIds&#39;</span><span class="p">,</span> <span class="s">&#39;param_req&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">},</span>
-        <span class="s">&#39;vlans&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;call&#39;</span><span class="p">:</span> <span class="s">&#39;Vlans&#39;</span><span class="p">,</span> <span class="s">&#39;param_req&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">},</span>
-    <span class="p">}</span>
+<span class="sd">        Usage:</span>
+
+<span class="sd">            &gt;&gt;&gt; from SoftLayer.metadata import MetadataManager</span>
+<span class="sd">            &gt;&gt;&gt; meta = MetadataManager(client)</span>
+<span class="sd">            &gt;&gt;&gt; meta.get(&#39;datacenter&#39;)</span>
+<span class="sd">            &#39;dal05&#39;</span>
+<span class="sd">            &gt;&gt;&gt; meta.get(&#39;fqdn&#39;)</span>
+<span class="sd">            &#39;test.example.com&#39;</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">attribs</span> <span class="o">=</span> <span class="n">METADATA_MAPPING</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">API_PRIVATE_ENDPOINT_REST</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
@@ -114,6 +130,12 @@
             <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </div>
 <div class="viewcode-block" id="MetadataManager.get"><a class="viewcode-back" href="../../api/managers/metadata.html#SoftLayer.metadata.MetadataManager.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">param</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Retreive a metadata attribute</span>
+
+<span class="sd">        :param name: name of the attribute to retrieve. See `attribs`</span>
+<span class="sd">        :param param: Required parameter for some attributes</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attribs</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">SoftLayerError</span><span class="p">(</span><span class="s">&#39;Unknown metadata attribute.&#39;</span><span class="p">)</span>
 
@@ -151,9 +173,23 @@
         <span class="k">return</span> <span class="n">network</span>
 
 <div class="viewcode-block" id="MetadataManager.public_network"><a class="viewcode-back" href="../../api/managers/metadata.html#SoftLayer.metadata.MetadataManager.public_network">[docs]</a>    <span class="k">def</span> <span class="nf">public_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns details about the public network</span>
+
+<span class="sd">        :param boolean router: True to return router details</span>
+<span class="sd">        :param boolean vlans: True to return vlan details</span>
+<span class="sd">        :param boolean vlan_ids: True to return vlan_ids</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_network</span><span class="p">(</span><span class="s">&#39;frontend&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="MetadataManager.private_network"><a class="viewcode-back" href="../../api/managers/metadata.html#SoftLayer.metadata.MetadataManager.private_network">[docs]</a>    <span class="k">def</span> <span class="nf">private_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns details about the private network</span>
+
+<span class="sd">        :param boolean router: True to return router details</span>
+<span class="sd">        :param boolean vlans: True to return vlan details</span>
+<span class="sd">        :param boolean vlan_ids: True to return vlan_ids</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_network</span><span class="p">(</span><span class="s">&#39;backend&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
 </pre></div>
 

@@ -1,22 +1,9 @@
 .. _client:
 
-Client
-------
+
+Developer Interface
+===================
 This is the primary API client to make API calls. It deals with constructing and executing XML-RPC calls against the SoftLayer API.
-
-
-.. automodule:: SoftLayer.API
-   :members:
-   :undoc-members:
-
-
-Exceptions
-----------
-
-.. automodule:: SoftLayer.exceptions
-   :members:
-   :undoc-members:
-
 
 Client setup
 ------------
@@ -113,6 +100,25 @@ Here's how to create a new Cloud Compute Instance using `SoftLayer_Virtual_Guest
             'localDiskFlag': 'false'
         })
 
+
+API Reference
+-------------
+.. autoclass:: SoftLayer.Client
+   :members:
+   :undoc-members:
+
+   .. automethod:: SoftLayer.Client.__getitem__
+
+.. autoclass:: SoftLayer.API.Service
+   :members:
+   :undoc-members:
+
+   .. automethod:: SoftLayer.API.Service.__call__
+
+
+.. automodule:: SoftLayer.exceptions
+   :members:
+   :undoc-members:
 
 
 Backwards Compatibility

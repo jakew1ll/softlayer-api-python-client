@@ -1,8 +1,5 @@
 .. _ssl:
 
-SSL
-===
-
 .. automodule:: SoftLayer.SSL
    :members:
    :undoc-members:

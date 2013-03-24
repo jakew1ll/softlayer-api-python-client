@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Client &mdash; SoftLayer API Python Client 2.1.0 documentation</title>
+    <title>Developer Interface &mdash; SoftLayer API Python Client 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,8 +25,8 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="SoftLayer API Python Client 2.1.0 documentation" href="../index.html" />
-    <link rel="next" title="Cloud Compute Instances" href="managers/cci.html" />
-    <link rel="prev" title="SoftLayer API Python Client" href="../index.html" /> 
+    <link rel="next" title="SoftLayer.CCI" href="managers/cci.html" />
+    <link rel="prev" title="Installation" href="../install.html" /> 
   </head>
   <body>
     <div class="related">
@@ -39,10 +39,10 @@
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="managers/cci.html" title="Cloud Compute Instances"
+          <a href="managers/cci.html" title="SoftLayer.CCI"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../index.html" title="SoftLayer API Python Client"
+          <a href="../install.html" title="Installation"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li> 
       </ul>
@@ -53,32 +53,96 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="client">
-<span id="id1"></span><h1>Client<a class="headerlink" href="#client" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="developer-interface">
+<span id="client"></span><h1>Developer Interface<a class="headerlink" href="#developer-interface" title="Permalink to this headline">¶</a></h1>
 <p>This is the primary API client to make API calls. It deals with constructing and executing XML-RPC calls against the SoftLayer API.</p>
-<span class="target" id="module-SoftLayer.API"></span><div class="section" id="softlayer-api">
-<h2>SoftLayer.API<a class="headerlink" href="#softlayer-api" title="Permalink to this headline">¶</a></h2>
-<p>SoftLayer API bindings</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body"><ol class="first loweralpha simple" start="3">
-<li>2013, SoftLayer Technologies, Inc. All rights reserved.</li>
-</ol>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">license:</th><td class="field-body"><p class="first">BSD, see LICENSE for more details.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">website:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://sldn.softlayer.com/article/Python">http://sldn.softlayer.com/article/Python</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+<div class="section" id="client-setup">
+<h2>Client setup<a class="headerlink" href="#client-setup" title="Permalink to this headline">¶</a></h2>
+<p>You can pass in your username and api_key when creating a SoftLayer client instance. However, you can set these in the environmental variables &#8216;SL_USERNAME&#8217; and &#8216;SL_API_KEY&#8217;</p>
+<p>Creating a client instance by passing in the username/api_key:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">SoftLayer</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">SoftLayer</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;YOUR_USERNAME&#39;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s">&#39;YOUR_API_KEY&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Creating a client instance with environmental variables set:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># env variables</span>
+<span class="c"># SL_USERNAME = YOUR_USERNAME</span>
+<span class="c"># SL_API_KEY = YOUR_API_KEY</span>
+<span class="kn">import</span> <span class="nn">SoftLayer</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">SoftLayer</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Below is an example of creating a client instance with more options. This will create a client with the private API endpoint (only accessable from the SoftLayer network), a timeout of 2 minutes, and with verbose mode on (prints out more than you ever wanted to know about the HTTP requests to stdout).</p>
+<div class="highlight-python"><pre>client = SoftLayer.Client(
+        username='YOUR_USERNAME',
+        api_key='YOUR_API_KEY'
+        endpoint_url=SoftLayer.API_PRIVATE_ENDPOINT,
+        timeout=240,
+        verbose=True,
+    )</pre>
+</div>
+</div>
+<div class="section" id="making-api-calls">
+<h2>Making API Calls<a class="headerlink" href="#making-api-calls" title="Permalink to this headline">¶</a></h2>
+<p>The SoftLayer API client for python leverages SoftLayer&#8217;s XML-RPC API. It supports authentication, object masks, object filters, limits, offsets, and retrieving objects by id. The following section assumes you have a initialized client named &#8216;client&#8217;.</p>
+<p>The best way to test our setup is to call the <a class="reference external" href="http://sldn.softlayer.com/reference/services/SoftLayer_Account/getObject">getObject</a> method on the <a class="reference external" href="http://sldn.softlayer.com/reference/services/SoftLayer_Account">SoftLayer_Account</a> service.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">client</span><span class="p">[</span><span class="s">&#39;Account&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getObject</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>For a more complex example we&#8217;ll retrieve a support ticket with id 123456 along with the ticket&#8217;s updates, the user it&#8217;s assigned to, the servers attached to it, and the datacenter those servers are in. To retrieve our extra information using an <a class="reference external" href="http://sldn.softlayer.com/article/Extended-Object-Masks">object mask</a>.</p>
+<p>Retreive a ticket using Object Masks.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ticket</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s">&#39;Ticket&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getObject</span><span class="p">(</span>
+    <span class="nb">id</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="s">&quot;mask[updates, assignedUser, attachedHardware.datacenter]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now add an update to the ticket.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">update</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s">&#39;Ticket&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">addUpdate</span><span class="p">({</span><span class="s">&#39;entry&#39;</span> <span class="p">:</span> <span class="s">&#39;Hello!&#39;</span><span class="p">},</span> <span class="nb">id</span><span class="o">=</span><span class="mi">123456</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Let&#8217;s get a listing of virtual guests using the domain example.com</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">client</span><span class="p">[</span><span class="s">&#39;Account&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getVirtualGuests</span><span class="p">(</span>
+    <span class="nb">filter</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;virtualGuests&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;domain&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;operation&#39;</span><span class="p">:</span> <span class="s">&#39;example.com&#39;</span><span class="p">}}})</span>
+</pre></div>
+</div>
+<p>This call gets tickets created between the beginning of March 1, 2013 and March 15, 2013.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">client</span><span class="p">[</span><span class="s">&#39;Account&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getTickets</span><span class="p">(</span>
+    <span class="nb">filter</span><span class="o">=</span><span class="p">{</span>
+        <span class="s">&#39;tickets&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&#39;createDate&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&#39;operation&#39;</span><span class="p">:</span> <span class="s">&#39;betweenDate&#39;</span><span class="p">,</span>
+                <span class="s">&#39;options&#39;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;startDate&#39;</span><span class="p">,</span> <span class="s">&#39;value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;03/01/2013 0:0:0&#39;</span><span class="p">]},</span>
+                    <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;endDate&#39;</span><span class="p">,</span> <span class="s">&#39;value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;03/15/2013 23:59:59&#39;</span><span class="p">]}</span>
+                <span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>SoftLayer&#8217;s XML-RPC API also allows for pagination.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">client</span><span class="p">[</span><span class="s">&#39;Account&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getVirtualGuests</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c"># Page 1</span>
+<span class="n">client</span><span class="p">[</span><span class="s">&#39;Account&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getVirtualGuests</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>  <span class="c"># Page 2</span>
+</pre></div>
+</div>
+<p>Here&#8217;s how to create a new Cloud Compute Instance using <a class="reference external" href="http://sldn.softlayer.com/reference/services/SoftLayer_Virtual_Guest/createObject">SoftLayer_Virtual_Guest.createObject</a>. Be warned, this call actually creates an hourly CCI so this does have billing implications.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">client</span><span class="p">[</span><span class="s">&#39;Virtual_Guest&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">createObject</span><span class="p">({</span>
+        <span class="s">&#39;hostname&#39;</span><span class="p">:</span> <span class="s">&#39;myhostname&#39;</span><span class="p">,</span>
+        <span class="s">&#39;domain&#39;</span><span class="p">:</span> <span class="s">&#39;example.com&#39;</span><span class="p">,</span>
+        <span class="s">&#39;startCpus&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s">&#39;maxMemory&#39;</span><span class="p">:</span> <span class="mi">1024</span><span class="p">,</span>
+        <span class="s">&#39;hourlyBillingFlag&#39;</span><span class="p">:</span> <span class="s">&#39;true&#39;</span><span class="p">,</span>
+        <span class="s">&#39;operatingSystemReferenceCode&#39;</span><span class="p">:</span> <span class="s">&#39;UBUNTU_LATEST&#39;</span><span class="p">,</span>
+        <span class="s">&#39;localDiskFlag&#39;</span><span class="p">:</span> <span class="s">&#39;false&#39;</span>
+    <span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="SoftLayer.API.Client">
-<em class="property">class </em><tt class="descclassname">SoftLayer.API.</tt><tt class="descname">Client</tt><big>(</big><em>service_name=None</em>, <em>id=None</em>, <em>username=None</em>, <em>api_key=None</em>, <em>endpoint_url=None</em>, <em>timeout=None</em>, <em>verbose=False</em><big>)</big><a class="reference internal" href="../_modules/SoftLayer/API.html#Client"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.API.Client" title="Permalink to this definition">¶</a></dt>
+<dt id="SoftLayer.Client">
+<em class="property">class </em><tt class="descclassname">SoftLayer.</tt><tt class="descname">Client</tt><big>(</big><em>service_name=None</em>, <em>id=None</em>, <em>username=None</em>, <em>api_key=None</em>, <em>endpoint_url=None</em>, <em>timeout=None</em>, <em>verbose=False</em><big>)</big><a class="headerlink" href="#SoftLayer.Client" title="Permalink to this definition">¶</a></dt>
 <dd><p>A SoftLayer API client.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -112,8 +176,22 @@ network.</li>
 </pre></div>
 </div>
 <dl class="method">
-<dt id="SoftLayer.API.Client.add_header">
-<tt class="descname">add_header</tt><big>(</big><em>name</em>, <em>value</em><big>)</big><a class="reference internal" href="../_modules/SoftLayer/API.html#Client.add_header"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.API.Client.add_header" title="Permalink to this definition">¶</a></dt>
+<dt id="SoftLayer.Client.__getitem__">
+<tt class="descname">__getitem__</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#SoftLayer.Client.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a SoftLayer Service.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; The name of the service. E.G. SoftLayer_Account</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="SoftLayer.Client.add_header">
+<tt class="descname">add_header</tt><big>(</big><em>name</em>, <em>value</em><big>)</big><a class="headerlink" href="#SoftLayer.Client.add_header" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set a SoftLayer API call header.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -132,8 +210,8 @@ network.</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="SoftLayer.API.Client.add_raw_header">
-<tt class="descname">add_raw_header</tt><big>(</big><em>name</em>, <em>value</em><big>)</big><a class="reference internal" href="../_modules/SoftLayer/API.html#Client.add_raw_header"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.API.Client.add_raw_header" title="Permalink to this definition">¶</a></dt>
+<dt id="SoftLayer.Client.add_raw_header">
+<tt class="descname">add_raw_header</tt><big>(</big><em>name</em>, <em>value</em><big>)</big><a class="headerlink" href="#SoftLayer.Client.add_raw_header" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set HTTP headers for API calls.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -152,8 +230,8 @@ network.</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="SoftLayer.API.Client.call">
-<tt class="descname">call</tt><big>(</big><em>service</em>, <em>method</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/SoftLayer/API.html#Client.call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.API.Client.call" title="Permalink to this definition">¶</a></dt>
+<dt id="SoftLayer.Client.call">
+<tt class="descname">call</tt><big>(</big><em>service</em>, <em>method</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#SoftLayer.Client.call" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make a SoftLayer API call</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -170,6 +248,8 @@ network.</li>
 <li><strong>raw_headers</strong> (<em>dict</em>) &#8211; (optional) HTTP transport headers</li>
 <li><strong>limit</strong> (<em>int</em>) &#8211; (optional) return at most this many results</li>
 <li><strong>offset</strong> (<em>int</em>) &#8211; (optional) offset results by this many</li>
+<li><strong>iter</strong> (<em>boolean</em>) &#8211; (optional) if True, returns a generator with the
+results</li>
 </ul>
 </td>
 </tr>
@@ -186,13 +266,30 @@ network.</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="SoftLayer.API.Client.iter_call">
-<tt class="descname">iter_call</tt><big>(</big><em>service</em>, <em>method</em>, <em>chunk=100</em>, <em>limit=None</em>, <em>offset=0</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/SoftLayer/API.html#Client.iter_call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.API.Client.iter_call" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="SoftLayer.Client.iter_call">
+<tt class="descname">iter_call</tt><big>(</big><em>service</em>, <em>method</em>, <em>chunk=100</em>, <em>limit=None</em>, <em>offset=0</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#SoftLayer.Client.iter_call" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generator that deals with paginating through results.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>service</strong> &#8211; the name of the SoftLayer API service</li>
+<li><strong>method</strong> &#8211; the method to call on the service</li>
+<li><strong>chunk</strong> (<em>integer</em>) &#8211; result size for each API call</li>
+<li><strong>*args</strong> &#8211; same optional arguments that <tt class="docutils literal"><span class="pre">Client.call</span></tt> takes</li>
+<li><strong>**kwargs</strong> &#8211; same optional keyword arguments that <tt class="docutils literal"><span class="pre">Client.call</span></tt>
+takes</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
-<dt id="SoftLayer.API.Client.remove_header">
-<tt class="descname">remove_header</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="../_modules/SoftLayer/API.html#Client.remove_header"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.API.Client.remove_header" title="Permalink to this definition">¶</a></dt>
+<dt id="SoftLayer.Client.remove_header">
+<tt class="descname">remove_header</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#SoftLayer.Client.remove_header" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove a SoftLayer API call header.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -207,12 +304,12 @@ network.</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="SoftLayer.API.Client.set_authentication">
-<tt class="descname">set_authentication</tt><big>(</big><em>username</em>, <em>api_key</em><big>)</big><a class="reference internal" href="../_modules/SoftLayer/API.html#Client.set_authentication"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.API.Client.set_authentication" title="Permalink to this definition">¶</a></dt>
+<dt id="SoftLayer.Client.set_authentication">
+<tt class="descname">set_authentication</tt><big>(</big><em>username</em>, <em>api_key</em><big>)</big><a class="headerlink" href="#SoftLayer.Client.set_authentication" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set user and key to authenticate a SoftLayer API call.</p>
 <p>Use this method if you wish to bypass the API_USER and API_KEY class
 constants and set custom authentication per API call.</p>
-<p>See U{<a class="reference external" href="https://manage.softlayer.com/Administrative/apiKeychain">https://manage.softlayer.com/Administrative/apiKeychain</a>} for more
+<p>See <a class="reference external" href="https://manage.softlayer.com/Administrative/apiKeychain">https://manage.softlayer.com/Administrative/apiKeychain</a> for more
 information.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -231,15 +328,15 @@ information.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="SoftLayer.API.Client.set_init_parameter">
-<tt class="descname">set_init_parameter</tt><big>(</big><em>id</em><big>)</big><a class="reference internal" href="../_modules/SoftLayer/API.html#Client.set_init_parameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.API.Client.set_init_parameter" title="Permalink to this definition">¶</a></dt>
+<dt id="SoftLayer.Client.set_init_parameter">
+<tt class="descname">set_init_parameter</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#SoftLayer.Client.set_init_parameter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set an initialization parameter header.</p>
 <p>Initialization parameters instantiate a SoftLayer API service object to
 act upon during your API method call. For instance, if your account has
 a server with ID number 1234, then setting an initialization parameter
 of 1234 in the SoftLayer_Hardware_Server Service instructs the API to
 act on server record 1234 in your method calls.</p>
-<p>See U{<a class="reference external" href="http://sldn.softlayer.com/article/Using-Initialization-Parameters-SoftLayer-API">http://sldn.softlayer.com/article/Using-Initialization-Parameters-SoftLayer-API</a>}  # NOQA
+<p>See <a class="reference external" href="http://sldn.softlayer.com/article/Using-Initialization-Parameters-SoftLayer-API">http://sldn.softlayer.com/article/Using-Initialization-Parameters-SoftLayer-API</a>  # NOQA
 for more information.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -254,14 +351,14 @@ for more information.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="SoftLayer.API.Client.set_object_mask">
-<tt class="descname">set_object_mask</tt><big>(</big><em>mask</em><big>)</big><a class="reference internal" href="../_modules/SoftLayer/API.html#Client.set_object_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.API.Client.set_object_mask" title="Permalink to this definition">¶</a></dt>
+<dt id="SoftLayer.Client.set_object_mask">
+<tt class="descname">set_object_mask</tt><big>(</big><em>mask</em><big>)</big><a class="headerlink" href="#SoftLayer.Client.set_object_mask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set an object mask to a SoftLayer API call.</p>
 <p>Use an object mask to retrieve data related your API call&#8217;s result.
 Object masks are skeleton objects, or strings that define nested
 relational properties to retrieve along with an object&#8217;s local
 properties. See
-U{<a class="reference external" href="http://sldn.softlayer.com/article/Using-Object-Masks-SoftLayer-API">http://sldn.softlayer.com/article/Using-Object-Masks-SoftLayer-API</a>}
+<a class="reference external" href="http://sldn.softlayer.com/article/Using-Object-Masks-SoftLayer-API">http://sldn.softlayer.com/article/Using-Object-Masks-SoftLayer-API</a>
 for more information.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -276,8 +373,8 @@ for more information.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="SoftLayer.API.Client.set_result_limit">
-<tt class="descname">set_result_limit</tt><big>(</big><em>limit</em>, <em>offset=0</em><big>)</big><a class="reference internal" href="../_modules/SoftLayer/API.html#Client.set_result_limit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.API.Client.set_result_limit" title="Permalink to this definition">¶</a></dt>
+<dt id="SoftLayer.Client.set_result_limit">
+<tt class="descname">set_result_limit</tt><big>(</big><em>limit</em>, <em>offset=0</em><big>)</big><a class="headerlink" href="#SoftLayer.Client.set_result_limit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set a result limit on a SoftLayer API call.</p>
 <p>Many SoftLayer API methods return a group of results. These methods
 support a way to limit the number of results retrieved from the
@@ -305,8 +402,8 @@ call&#8217;s returned result</li>
 <dt id="SoftLayer.API.Service">
 <em class="property">class </em><tt class="descclassname">SoftLayer.API.</tt><tt class="descname">Service</tt><big>(</big><em>client</em>, <em>name</em><big>)</big><a class="reference internal" href="../_modules/SoftLayer/API.html#Service"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.API.Service" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
-<dt id="SoftLayer.API.Service.call">
-<tt class="descname">call</tt><big>(</big><em>name</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#SoftLayer.API.Service.call" title="Permalink to this definition">¶</a></dt>
+<dt id="SoftLayer.API.Service.__call__">
+<tt class="descname">__call__</tt><big>(</big><em>name</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#SoftLayer.API.Service.__call__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make a SoftLayer API call</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -332,14 +429,71 @@ takes</li>
 </dl>
 </dd></dl>
 
+<dl class="method">
+<dt id="SoftLayer.API.Service.call">
+<tt class="descname">call</tt><big>(</big><em>name</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/SoftLayer/API.html#Service.call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.API.Service.call" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a SoftLayer API call</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>method</strong> &#8211; the method to call on the service</li>
+<li><strong>*args</strong> &#8211; same optional arguments that <tt class="docutils literal"><span class="pre">Client.call</span></tt> takes</li>
+<li><strong>**kwargs</strong> &#8211; same optional keyword arguments that <tt class="docutils literal"><span class="pre">Client.call</span></tt>
+takes</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Usage:</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="p">[</span><span class="s">&#39;Account&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getVirtualGuests</span><span class="p">(</span><span class="n">mask</span><span class="o">=</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="go">[...]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
 </dd></dl>
 
+<dl class="method">
+<dt id="SoftLayer.API.Service.iter_call">
+<tt class="descname">iter_call</tt><big>(</big><em>name</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/SoftLayer/API.html#Service.iter_call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.API.Service.iter_call" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generator that deals with paginating through results.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>method</strong> &#8211; the method to call on the service</li>
+<li><strong>chunk</strong> (<em>integer</em>) &#8211; result size for each API call</li>
+<li><strong>*args</strong> &#8211; same optional arguments that <tt class="docutils literal"><span class="pre">Client.call</span></tt> takes</li>
+<li><strong>**kwargs</strong> &#8211; same optional keyword arguments that <tt class="docutils literal"><span class="pre">Client.call</span></tt>
+takes</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Usage:</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gen</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s">&#39;Account&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getVirtualGuests</span><span class="p">(</span><span class="nb">iter</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">virtual_guest</span> <span class="ow">in</span> <span class="n">gen</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">virtual_guest</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span>
+<span class="gp">...</span>
+<span class="go">1234</span>
+<span class="go">4321</span>
+</pre></div>
 </div>
-</div>
-<div class="section" id="module-SoftLayer.exceptions">
-<span id="exceptions"></span><h1>Exceptions<a class="headerlink" href="#module-SoftLayer.exceptions" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="softlayer-exceptions">
-<h2>SoftLayer.exceptions<a class="headerlink" href="#softlayer-exceptions" title="Permalink to this headline">¶</a></h2>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-SoftLayer.exceptions"></span><div class="section" id="softlayer-exceptions">
+<h3>SoftLayer.exceptions<a class="headerlink" href="#softlayer-exceptions" title="Permalink to this headline">¶</a></h3>
 <p>Exceptions used throughout the library</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -436,90 +590,8 @@ from the API.</p>
 
 </div>
 </div>
-<div class="section" id="client-setup">
-<h1>Client setup<a class="headerlink" href="#client-setup" title="Permalink to this headline">¶</a></h1>
-<p>You can pass in your username and api_key when creating a SoftLayer client instance. However, you can set these in the environmental variables &#8216;SL_USERNAME&#8217; and &#8216;SL_API_KEY&#8217;</p>
-<p>Creating a client instance by passing in the username/api_key:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">SoftLayer</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">SoftLayer</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&#39;YOUR_USERNAME&#39;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s">&#39;YOUR_API_KEY&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Creating a client instance with environmental variables set:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># env variables</span>
-<span class="c"># SL_USERNAME = YOUR_USERNAME</span>
-<span class="c"># SL_API_KEY = YOUR_API_KEY</span>
-<span class="kn">import</span> <span class="nn">SoftLayer</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">SoftLayer</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>Below is an example of creating a client instance with more options. This will create a client with the private API endpoint (only accessable from the SoftLayer network), a timeout of 2 minutes, and with verbose mode on (prints out more than you ever wanted to know about the HTTP requests to stdout).</p>
-<div class="highlight-python"><pre>client = SoftLayer.Client(
-        username='YOUR_USERNAME',
-        api_key='YOUR_API_KEY'
-        endpoint_url=SoftLayer.API_PRIVATE_ENDPOINT,
-        timeout=240,
-        verbose=True,
-    )</pre>
-</div>
-</div>
-<div class="section" id="making-api-calls">
-<h1>Making API Calls<a class="headerlink" href="#making-api-calls" title="Permalink to this headline">¶</a></h1>
-<p>The SoftLayer API client for python leverages SoftLayer&#8217;s XML-RPC API. It supports authentication, object masks, object filters, limits, offsets, and retrieving objects by id. The following section assumes you have a initialized client named &#8216;client&#8217;.</p>
-<p>The best way to test our setup is to call the <a class="reference external" href="http://sldn.softlayer.com/reference/services/SoftLayer_Account/getObject">getObject</a> method on the <a class="reference external" href="http://sldn.softlayer.com/reference/services/SoftLayer_Account">SoftLayer_Account</a> service.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">client</span><span class="p">[</span><span class="s">&#39;Account&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getObject</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>For a more complex example we&#8217;ll retrieve a support ticket with id 123456 along with the ticket&#8217;s updates, the user it&#8217;s assigned to, the servers attached to it, and the datacenter those servers are in. To retrieve our extra information using an <a class="reference external" href="http://sldn.softlayer.com/article/Extended-Object-Masks">object mask</a>.</p>
-<p>Retreive a ticket using Object Masks.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">ticket</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s">&#39;Ticket&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getObject</span><span class="p">(</span>
-    <span class="nb">id</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="s">&quot;mask[updates, assignedUser, attachedHardware.datacenter]&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Now add an update to the ticket.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">update</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s">&#39;Ticket&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">addUpdate</span><span class="p">({</span><span class="s">&#39;entry&#39;</span> <span class="p">:</span> <span class="s">&#39;Hello!&#39;</span><span class="p">},</span> <span class="nb">id</span><span class="o">=</span><span class="mi">123456</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Let&#8217;s get a listing of virtual guests using the domain example.com</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">client</span><span class="p">[</span><span class="s">&#39;Account&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getVirtualGuests</span><span class="p">(</span>
-    <span class="nb">filter</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;virtualGuests&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;domain&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;operation&#39;</span><span class="p">:</span> <span class="s">&#39;example.com&#39;</span><span class="p">}}})</span>
-</pre></div>
-</div>
-<p>This call gets tickets created between the beginning of March 1, 2013 and March 15, 2013.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">client</span><span class="p">[</span><span class="s">&#39;Account&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getTickets</span><span class="p">(</span>
-    <span class="nb">filter</span><span class="o">=</span><span class="p">{</span>
-        <span class="s">&#39;tickets&#39;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s">&#39;createDate&#39;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s">&#39;operation&#39;</span><span class="p">:</span> <span class="s">&#39;betweenDate&#39;</span><span class="p">,</span>
-                <span class="s">&#39;options&#39;</span><span class="p">:</span> <span class="p">[</span>
-                    <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;startDate&#39;</span><span class="p">,</span> <span class="s">&#39;value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;03/01/2013 0:0:0&#39;</span><span class="p">]},</span>
-                    <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;endDate&#39;</span><span class="p">,</span> <span class="s">&#39;value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;03/15/2013 23:59:59&#39;</span><span class="p">]}</span>
-                <span class="p">]</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p>SoftLayer&#8217;s XML-RPC API also allows for pagination.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">client</span><span class="p">[</span><span class="s">&#39;Account&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getVirtualGuests</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c"># Page 1</span>
-<span class="n">client</span><span class="p">[</span><span class="s">&#39;Account&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getVirtualGuests</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>  <span class="c"># Page 2</span>
-</pre></div>
-</div>
-<p>Here&#8217;s how to create a new Cloud Compute Instance using <a class="reference external" href="http://sldn.softlayer.com/reference/services/SoftLayer_Virtual_Guest/createObject">SoftLayer_Virtual_Guest.createObject</a>. Be warned, this call actually creates an hourly CCI so this does have billing implications.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">client</span><span class="p">[</span><span class="s">&#39;Virtual_Guest&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">createObject</span><span class="p">({</span>
-        <span class="s">&#39;hostname&#39;</span><span class="p">:</span> <span class="s">&#39;myhostname&#39;</span><span class="p">,</span>
-        <span class="s">&#39;domain&#39;</span><span class="p">:</span> <span class="s">&#39;example.com&#39;</span><span class="p">,</span>
-        <span class="s">&#39;startCpus&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="s">&#39;maxMemory&#39;</span><span class="p">:</span> <span class="mi">1024</span><span class="p">,</span>
-        <span class="s">&#39;hourlyBillingFlag&#39;</span><span class="p">:</span> <span class="s">&#39;true&#39;</span><span class="p">,</span>
-        <span class="s">&#39;operatingSystemReferenceCode&#39;</span><span class="p">:</span> <span class="s">&#39;UBUNTU_LATEST&#39;</span><span class="p">,</span>
-        <span class="s">&#39;localDiskFlag&#39;</span><span class="p">:</span> <span class="s">&#39;false&#39;</span>
-    <span class="p">})</span>
-</pre></div>
-</div>
-</div>
 <div class="section" id="backwards-compatibility">
-<h1>Backwards Compatibility<a class="headerlink" href="#backwards-compatibility" title="Permalink to this headline">¶</a></h1>
+<h2>Backwards Compatibility<a class="headerlink" href="#backwards-compatibility" title="Permalink to this headline">¶</a></h2>
 <p>If you&#8217;ve been using the older Python client (&lt;2.0), you&#8217;ll be happy to know that the old API is still currently working. However, you should deprecate use of the old stuff. Below is an example of the old API converted to the new one.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">SoftLayer.API</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">SoftLayer</span><span class="o">.</span><span class="n">API</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="s">&#39;SoftLayer_Account&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="s">&#39;username&#39;</span><span class="p">,</span> <span class="s">&#39;api_key&#39;</span><span class="p">)</span>
@@ -535,7 +607,7 @@ from the API.</p>
 </pre></div>
 </div>
 <div class="section" id="deprecated-apis">
-<h2>Deprecated APIs<a class="headerlink" href="#deprecated-apis" title="Permalink to this headline">¶</a></h2>
+<h3>Deprecated APIs<a class="headerlink" href="#deprecated-apis" title="Permalink to this headline">¶</a></h3>
 <p>Below are examples of how the old usages to the new API.</p>
 <p><strong>Importing the module</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># Old</span>
@@ -629,6 +701,7 @@ from the API.</p>
 </div>
 </div>
 </div>
+</div>
 
 
           </div>
@@ -638,28 +711,27 @@ from the API.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Client</a><ul>
-<li><a class="reference internal" href="#softlayer-api">SoftLayer.API</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-SoftLayer.exceptions">Exceptions</a><ul>
+<li><a class="reference internal" href="#">Developer Interface</a><ul>
+<li><a class="reference internal" href="#client-setup">Client setup</a></li>
+<li><a class="reference internal" href="#making-api-calls">Making API Calls</a></li>
+<li><a class="reference internal" href="#api-reference">API Reference</a><ul>
 <li><a class="reference internal" href="#softlayer-exceptions">SoftLayer.exceptions</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#client-setup">Client setup</a></li>
-<li><a class="reference internal" href="#making-api-calls">Making API Calls</a></li>
 <li><a class="reference internal" href="#backwards-compatibility">Backwards Compatibility</a><ul>
 <li><a class="reference internal" href="#deprecated-apis">Deprecated APIs</a></li>
 </ul>
 </li>
 </ul>
+</li>
+</ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../index.html"
-                        title="previous chapter">SoftLayer API Python Client</a></p>
+  <p class="topless"><a href="../install.html"
+                        title="previous chapter">Installation</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="managers/cci.html"
-                        title="next chapter">Cloud Compute Instances</a></p>
+                        title="next chapter">SoftLayer.CCI</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/api/client.txt"
@@ -692,10 +764,10 @@ from the API.</p>
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="managers/cci.html" title="Cloud Compute Instances"
+          <a href="managers/cci.html" title="SoftLayer.CCI"
              >next</a> |</li>
         <li class="right" >
-          <a href="../index.html" title="SoftLayer API Python Client"
+          <a href="../install.html" title="Installation"
              >previous</a> |</li>
         <li><a href="../index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li> 
       </ul>

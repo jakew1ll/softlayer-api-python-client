@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Metadata &mdash; SoftLayer API Python Client 2.1.0 documentation</title>
+    <title>SoftLayer.metadata &mdash; SoftLayer API Python Client 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -25,8 +25,8 @@
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="SoftLayer API Python Client 2.1.0 documentation" href="../../index.html" />
-    <link rel="next" title="SSL" href="ssl.html" />
-    <link rel="prev" title="Firewall" href="firewall.html" /> 
+    <link rel="next" title="SoftLayer.SSL" href="ssl.html" />
+    <link rel="prev" title="SoftLayer.firewall" href="firewall.html" /> 
   </head>
   <body>
     <div class="related">
@@ -39,10 +39,10 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="ssl.html" title="SSL"
+          <a href="ssl.html" title="SoftLayer.SSL"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="firewall.html" title="Firewall"
+          <a href="firewall.html" title="SoftLayer.firewall"
              accesskey="P">previous</a> |</li>
         <li><a href="../../index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li> 
       </ul>
@@ -53,10 +53,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="metadata">
-<span id="id1"></span><h1>Metadata<a class="headerlink" href="#metadata" title="Permalink to this headline">¶</a></h1>
-<span class="target" id="module-SoftLayer.metadata"></span><div class="section" id="softlayer-metadata">
-<h2>SoftLayer.metadata<a class="headerlink" href="#softlayer-metadata" title="Permalink to this headline">¶</a></h2>
+  <span class="target" id="module-SoftLayer.metadata"><span id="metadata"></span></span><div class="section" id="softlayer-metadata">
+<h1>SoftLayer.metadata<a class="headerlink" href="#softlayer-metadata" title="Permalink to this headline">¶</a></h1>
 <p>Metadata Manager/helpers</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -75,7 +73,18 @@
 <dl class="class">
 <dt id="SoftLayer.metadata.MetadataManager">
 <em class="property">class </em><tt class="descclassname">SoftLayer.metadata.</tt><tt class="descname">MetadataManager</tt><big>(</big><em>client=None</em>, <em>timeout=5</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/metadata.html#MetadataManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.metadata.MetadataManager" title="Permalink to this definition">¶</a></dt>
-<dd><p>Manages metadata.</p>
+<dd><p>Provides an interface for the metadata service. This provides metadata
+about the resourse it is called from. See <cite>METADATA_ATTRIBUTES</cite> for
+full list of attributes.</p>
+<p>Usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">SoftLayer.metadata</span> <span class="kn">import</span> <span class="n">MetadataManager</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">meta</span> <span class="o">=</span> <span class="n">MetadataManager</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;datacenter&#39;</span><span class="p">)</span>
+<span class="go">&#39;dal05&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;fqdn&#39;</span><span class="p">)</span>
+<span class="go">&#39;test.example.com&#39;</span>
+</pre></div>
+</div>
 <dl class="attribute">
 <dt id="SoftLayer.metadata.MetadataManager.attribs">
 <tt class="descname">attribs</tt><em class="property"> = {'datacenter': {'call': 'Datacenter'}, 'domain': {'call': 'Domain'}, 'backend_mac': {'call': 'BackendMacAddresses'}, 'primary_ip': {'call': 'PrimaryIpAddress'}, 'primary_backend_ip': {'call': 'PrimaryBackendIpAddress'}, 'tags': {'call': 'Tags'}, 'primary_frontend_ip': {'call': 'PrimaryIpAddress'}, 'hostname': {'call': 'Hostname'}, 'fqdn': {'call': 'FullyQualifiedDomainName'}, 'user_data': {'call': 'UserMetadata'}, 'datacenter_id': {'call': 'DatacenterId'}, 'vlan_ids': {'call': 'VlanIds', 'param_req': True}, 'frontend_mac': {'call': 'FrontendMacAddresses'}, 'user_metadata': {'call': 'UserMetadata'}, 'provision_state': {'call': 'ProvisionState'}, 'router': {'call': 'Router', 'param_req': True}, 'vlans': {'call': 'Vlans', 'param_req': True}, 'id': {'call': 'Id'}}</em><a class="headerlink" href="#SoftLayer.metadata.MetadataManager.attribs" title="Permalink to this definition">¶</a></dt>
@@ -84,7 +93,20 @@
 <dl class="method">
 <dt id="SoftLayer.metadata.MetadataManager.get">
 <tt class="descname">get</tt><big>(</big><em>name</em>, <em>param=None</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/metadata.html#MetadataManager.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.metadata.MetadataManager.get" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Retreive a metadata attribute</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> &#8211; name of the attribute to retrieve. See <cite>attribs</cite></li>
+<li><strong>param</strong> &#8211; Required parameter for some attributes</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="SoftLayer.metadata.MetadataManager.make_request">
@@ -94,17 +116,49 @@
 <dl class="method">
 <dt id="SoftLayer.metadata.MetadataManager.private_network">
 <tt class="descname">private_network</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/metadata.html#MetadataManager.private_network"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.metadata.MetadataManager.private_network" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns details about the private network</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>router</strong> (<em>boolean</em>) &#8211; True to return router details</li>
+<li><strong>vlans</strong> (<em>boolean</em>) &#8211; True to return vlan details</li>
+<li><strong>vlan_ids</strong> (<em>boolean</em>) &#8211; True to return vlan_ids</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="SoftLayer.metadata.MetadataManager.public_network">
 <tt class="descname">public_network</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/metadata.html#MetadataManager.public_network"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.metadata.MetadataManager.public_network" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns details about the public network</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>router</strong> (<em>boolean</em>) &#8211; True to return router details</li>
+<li><strong>vlans</strong> (<em>boolean</em>) &#8211; True to return vlan details</li>
+<li><strong>vlan_ids</strong> (<em>boolean</em>) &#8211; True to return vlan_ids</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
 </div>
-</div>
+<dl class="attribute">
+<dt id="SoftLayer.metadata.METADATA_ATTRIBUTES">
+<tt class="descclassname">metadata.</tt><tt class="descname">METADATA_ATTRIBUTES</tt><em class="property"> = ['datacenter', 'domain', 'backend_mac', 'primary_ip', 'primary_backend_ip', 'tags', 'primary_frontend_ip', 'hostname', 'fqdn', 'user_data', 'datacenter_id', 'vlan_ids', 'frontend_mac', 'user_metadata', 'provision_state', 'router', 'vlans', 'id']</em><a class="headerlink" href="#SoftLayer.metadata.METADATA_ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 
 
           </div>
@@ -112,20 +166,12 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Metadata</a><ul>
-<li><a class="reference internal" href="#softlayer-metadata">SoftLayer.metadata</a></li>
-</ul>
-</li>
-</ul>
-
   <h4>Previous topic</h4>
   <p class="topless"><a href="firewall.html"
-                        title="previous chapter">Firewall</a></p>
+                        title="previous chapter">SoftLayer.firewall</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="ssl.html"
-                        title="next chapter">SSL</a></p>
+                        title="next chapter">SoftLayer.SSL</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/api/managers/metadata.txt"
@@ -158,10 +204,10 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="ssl.html" title="SSL"
+          <a href="ssl.html" title="SoftLayer.SSL"
              >next</a> |</li>
         <li class="right" >
-          <a href="firewall.html" title="Firewall"
+          <a href="firewall.html" title="SoftLayer.firewall"
              >previous</a> |</li>
         <li><a href="../../index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li> 
       </ul>

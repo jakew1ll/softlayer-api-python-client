@@ -84,7 +84,7 @@
 <div class="viewcode-block" id="DNSManager.list_zones"><a class="viewcode-back" href="../../api/managers/dns.html#SoftLayer.DNS.DNSManager.list_zones">[docs]</a>    <span class="k">def</span> <span class="nf">list_zones</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Retrieve a list of all DNS zones.</span>
 
-<span class="sd">        :param dict **kwargs: response-level arguments (limit, offset, etc.)</span>
+<span class="sd">        :param dict \*\*kwargs: response-level arguments (limit, offset, etc.)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">[</span><span class="s">&#39;Account&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getDomains</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>

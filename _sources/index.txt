@@ -9,8 +9,9 @@ Release v\ |version|. (:ref:`Installation <install>`)
 API Documentation
 -----------------
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
+   install
    api/client
 
 ::
@@ -22,17 +23,14 @@ API Documentation
 	'Your Company'
 
 Managers
----------
+--------
 Managers mask out a lot of the complexities of using the API into classes that provide a simpler interface to various services.
 
 .. toctree::
    :maxdepth: 1
+   :glob:
 
-   api/managers/cci
-   api/managers/dns
-   api/managers/firewall
-   api/managers/metadata
-   api/managers/ssl
+   api/managers/*
 
 ::
 

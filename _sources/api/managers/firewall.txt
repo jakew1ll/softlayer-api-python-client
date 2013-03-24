@@ -1,8 +1,5 @@
 .. _firewall:
 
-Firewall
-========
-
 .. automodule:: SoftLayer.firewall
    :members:
    :undoc-members:
