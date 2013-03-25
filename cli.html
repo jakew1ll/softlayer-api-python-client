@@ -1,0 +1,261 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Command-line Interface &mdash; SoftLayer API Python Client 2.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="SoftLayer API Python Client 2.1.0 documentation" href="index.html" />
+    <link rel="next" title="Command-Line Interface Developer Guide" href="cli/dev.html" />
+    <link rel="prev" title="SoftLayer.SSL" href="api/managers/ssl.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cli/dev.html" title="Command-Line Interface Developer Guide"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/managers/ssl.html" title="SoftLayer.SSL"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="command-line-interface">
+<span id="cli"></span><h1>Command-line Interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h1>
+<p>The SoftLayer command line interface is available via the <cite>sl</cite> command available in your <cite>PATH</cite>.  The <cite>sl</cite> command is a reference implementation of SoftLayer API bindings for python and how to efficiently make API calls.</p>
+<div class="section" id="configuration-setup">
+<h2>Configuration Setup<a class="headerlink" href="#configuration-setup" title="Permalink to this headline">¶</a></h2>
+<p>To check the configuration, you can use <cite>sl config show</cite>.</p>
+<div class="highlight-python"><pre>$ sl config setup
+Username: username
+API Key: oyVmeipYQCNrjVS4rF9bHWV7D75S6pa1fghFl384v7mwRCbHTfuJ8qRORIqoVnha
+Endpoint URL [https://api.softlayer.com/xmlrpc/v3/]:
+Are you sure you want to write settings to "/path/to/home/.softlayer"? [y/N]: y</pre>
+</div>
+<p>To check the configuration, you can use <cite>sl config show</cite>.</p>
+<div class="highlight-python"><pre>$ sl config show
+:..............:..................................................................:
+:         Name : Value                                                            :
+:..............:..................................................................:
+:     Username : username                                                         :
+:      API Key : oyVmeipYQCNrjVS4rF9bHWV7D75S6pa1fghFl384v7mwRCbHTfuJ8qRORIqoVnha :
+: Endpoint URL : https://api.softlayer.com/xmlrpc/v3/                             :
+:..............:..................................................................:</pre>
+</div>
+</div>
+<div class="section" id="configuration-file-details">
+<h2>Configuration File Details<a class="headerlink" href="#configuration-file-details" title="Permalink to this headline">¶</a></h2>
+<p>The CLI loads your settings from a number of different locations.</p>
+<ul class="simple">
+<li>Enviorment variables (SL_USERNAME, SL_API_KEY)</li>
+<li>Config file (~/.softlayer)</li>
+<li>Or argument (-C/path/to/config or &#8211;config=/path/to/config)</li>
+</ul>
+<p>The configuration file is INI based and requires the <cite>softlayer</cite> section to be present.
+The only required fields are <cite>username</cite> and <cite>api_key</cite>. You can optionally also/exclusively supply the <cite>endpoint_url</cite> as well.</p>
+<p><em>Full config</em></p>
+<div class="highlight-python"><pre>[softlayer]
+username = SL00000000
+api_key = 05ac94d4d2047c2189f94a8a6ab6905905ac94d4d2047c2189f94a8a6ab69059
+endpoint_url = http://api.softlayer.com/xmlrpc/v3/</pre>
+</div>
+<p><em>exclusive url</em></p>
+<div class="highlight-python"><pre>[softlayer]
+endpoint_url = http://api.softlayer.com/xmlrpc/v3/</pre>
+</div>
+</div>
+<div class="section" id="usage-examples">
+<h2>Usage Examples<a class="headerlink" href="#usage-examples" title="Permalink to this headline">¶</a></h2>
+<p>To discover the available commands, simply type <cite>sl</cite>.</p>
+<div class="highlight-python"><pre>$ sl
+usage: sl &lt;command&gt; [&lt;args&gt;...]
+       sl help &lt;command&gt;
+       sl [-h | --help]
+
+SoftLayer Command-line Client
+
+The available commands are:
+  firewall  Firewall rule and security management
+  image     Manages compute and flex images
+  ssl       Manages SSL
+  cci       Manage, delete, order compute instances
+  dns       Manage DNS
+  config    View and edit configuration for this tool
+  metadata  Get details about this machine. Also available with 'my' and 'meta'
+  nas       View NAS details
+  iscsi     View iSCSI details
+
+See 'sl help &lt;command&gt;' for more information on a specific command.
+
+To use most commands your SoftLayer username and api_key need to be configured.
+The easiest way to do that is to use: 'sl config setup'</pre>
+</div>
+<p>As you can see, there are a number of commands. To look at the list of subcommands for Cloud Compute Instances, type <cite>sl &lt;command&gt;</cite>. For example:</p>
+<div class="highlight-python"><pre>$ sl cci
+usage: sl cci [&lt;command&gt;] [&lt;args&gt;...] [options]
+
+Manage, delete, order compute instances
+
+The available commands are:
+  network         Manage network settings
+  create          Order and create a CCI
+                    (see `sl cci create-options` for choices)
+  manage          Manage active CCI
+  list            List CCI's on the account
+  detail          Output details about a CCI
+  dns             DNS related actions to a CCI
+  cancel          Cancel a running CCI
+  create-options  Output available available options when creating a CCI
+  reload          Reload the OS on a CCI based on its current configuration
+
+Standard Options:
+  -h --help  Show this screen</pre>
+</div>
+<p>Finally, we can make an actual call. Let&#8217;s list out the CCIs on our account using <cite>sl cci list</cite>.</p>
+<div class="highlight-python"><pre>$ sl cci list
+:.........:............:....................:.......:........:................:..............:....................:
+:    id   : datacenter :       host         : cores : memory :   primary_ip   :  backend_ip  : active_transaction :
+:.........:............:....................:.......:........:................:..............:....................:
+: 1234567 :   dal05    :  test.example.com  :   4   :   4G   :    12.34.56    :   65.43.21   :         -          :
+:.........:............:....................:.......:........:................:..............:....................:</pre>
+</div>
+<p>Most commands will take in additional options/arguments. To see all available actions, use <cite>&#8211;help</cite>.</p>
+<div class="highlight-python"><pre>$ sl cci list --help
+usage: sl cci list [--hourly | --monthly] [--sortby=SORT_COLUMN] [--tags=TAGS]
+                   [options]
+
+List CCIs
+
+Examples:
+    sl cci list --datacenter=dal05
+    sl cci list --network=100 --cpu=2
+    sl cci list --memory='&gt;= 2048'
+    sl cci list --tags=production,db
+
+Options:
+  --sortby=ARG  Column to sort by. options: id, datacenter, host,
+                Cores, memory, primary_ip, backend_ip
+
+Filters:
+  --hourly                 Show hourly instances
+  --monthly                Show monthly instances
+  -H --hostname=HOST       Host portion of the FQDN. example: server
+  -D --domain=DOMAIN       Domain portion of the FQDN example: example.com
+  -c --cpu=CPU             Number of CPU cores
+  -m --memory=MEMORY       Memory in mebibytes (n * 1024)
+  -d DC, --datacenter=DC   datacenter shortname (sng01, dal05, ...)
+  -n MBPS, --network=MBPS  Network port speed in Mbps
+  --tags=ARG               Only show instances that have one of these tags.
+                           Comma-separated. (production,db)
+
+For more on filters see 'sl help filters'
+
+Standard Options:
+  --format=ARG           Output format. [Options: table, raw] [Default: table]
+  -C FILE --config=FILE  Config file location. [Default: ~/.softlayer]
+  -h --help              Show this screen</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Command-line Interface</a><ul>
+<li><a class="reference internal" href="#configuration-setup">Configuration Setup</a></li>
+<li><a class="reference internal" href="#configuration-file-details">Configuration File Details</a></li>
+<li><a class="reference internal" href="#usage-examples">Usage Examples</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="api/managers/ssl.html"
+                        title="previous chapter">SoftLayer.SSL</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="cli/dev.html"
+                        title="next chapter">Command-Line Interface Developer Guide</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/cli.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cli/dev.html" title="Command-Line Interface Developer Guide"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="api/managers/ssl.html" title="SoftLayer.SSL"
+             >previous</a> |</li>
+        <li><a href="index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, SoftLayer Technologies, Inc..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

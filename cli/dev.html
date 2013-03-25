@@ -1,0 +1,348 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Command-Line Interface Developer Guide &mdash; SoftLayer API Python Client 2.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SoftLayer API Python Client 2.1.0 documentation" href="../index.html" />
+    <link rel="prev" title="Command-line Interface" href="../cli.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../cli.html" title="Command-line Interface"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="admonition note" id="dev">
+<p class="first admonition-title">Note</p>
+<p class="last">Full example module available <a class="reference internal" href="example_module.html#example-module"><em>here</em></a></p>
+</div>
+<div class="section" id="command-line-interface-developer-guide">
+<h1>Command-Line Interface Developer Guide<a class="headerlink" href="#command-line-interface-developer-guide" title="Permalink to this headline">¶</a></h1>
+<p>A CLI interface is broken into 4 major parts:</p>
+<ul class="simple">
+<li>module</li>
+<li>docblock</li>
+<li>action</li>
+<li>docblock</li>
+<li>docblock</li>
+</ul>
+<div class="section" id="defining-a-module">
+<h2>Defining a module<a class="headerlink" href="#defining-a-module" title="Permalink to this headline">¶</a></h2>
+<p>A module is a python module residing in <cite>SoftLayer/CLI/modules/&lt;module&gt;.py</cite>.  The filename represented here is what is directly exposed after the <cite>sl</cite> command. I.e. <cite>sl cci</cite> is <cite>SoftLayer/CLI/modules/cci.py</cite>.  The module&#8217;s docblock is used as the [argument parser](<a class="reference external" href="http://docopt.org/">http://docopt.org/</a>) and usage the end user will see.  <cite>SoftLayer.CLI.helpers</cite> contain all the helper functions and classes used for creating a CLI interface.  This is a typical setup and how it maps:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">usage: sl example [&lt;command&gt;] [&lt;args&gt;...] [options]</span>
+
+<span class="sd">Example implementation of a CLI module</span>
+
+<span class="sd">Available commands are:</span>
+<span class="sd">  print    print example</span>
+<span class="sd">  pretty   formatted print example</span>
+<span class="sd">  parse  parsing args example</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">SoftLayer.CLI</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CLIRunnable</span><span class="p">,</span> <span class="n">Table</span><span class="p">,</span> <span class="n">no_going_back</span><span class="p">,</span> <span class="n">confirm</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><pre>$ sl example
+usage: sl example [&lt;command&gt;] [&lt;args&gt;...] [options]
+
+Example implementation of a CLI module
+
+Available commands are:
+  print    print example
+  pretty   formatted print example
+  parse  parsing args example
+
+Standard Options:
+  -h --help  Show this screen</pre>
+</div>
+</div>
+<div class="section" id="action">
+<h2>Action<a class="headerlink" href="#action" title="Permalink to this headline">¶</a></h2>
+<p>Actions are implemented using classes in the module that subclass <cite>CLIRunnable</cite>.  The actual class name is irrelevant for the implementation details as it isn&#8217;t used anywhere.  The docblock is used as the arguement parser as well.  Unlike the modules docblock, additional, common, arguments are added to the end as well; i.e. <cite>&#8211;config</cite> and <cite>&#8211;format</cite>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">CLIRunnable</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">add_additional_args</span><span class="p">(</span><span class="n">parser</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>The required interfaces are:</p>
+<ul class="simple">
+<li>The docblock (__doc__) for docopt</li>
+<li>action</li>
+<li>def execute(client, args)<ul>
+<li>Don&#8217;t forget the &#64;staticmethod annotation!</li>
+<li>you can also use &#64;classmethod and use execute(cls, client, args) if you plan on dispatching instead of executing a simple task.</li>
+</ul>
+</li>
+</ul>
+<p>A minimal implementation for <cite>sl example print</cite> would look like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ExampleAction</span><span class="p">(</span><span class="n">CLIRunnable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">usage: sl example print [options]</span>
+
+<span class="sd">Print example</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+    <span class="n">action</span> <span class="o">=</span> <span class="s">&#39;print&#39;</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;EXAMPLE!&quot;</span>
+</pre></div>
+</div>
+<p>Which in turn, works like this:</p>
+<div class="highlight-python"><pre>$ sl example print
+EXAMPLE!
+$ sl example print -h
+usage: sl example print [options]
+
+Print example
+
+Standard Options:
+  --format=ARG           Output format. [Options: table, raw] [Default: table]
+  -C FILE --config=FILE  Config file location. [Default: ~/.softlayer]
+  -h --help              Show this screen</pre>
+</div>
+</div>
+<div class="section" id="output">
+<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>execute()</cite> method is expected to return either <cite>None</cite> or an instance of <cite>SoftLayer.CLI.helpers.Table</cite>.  When <cite>None</cite> is returned, it assumes all output is handled inside of <cite>execute</cite>.  <cite>SoftLayer.CLI.modules.dns.DumpZone</cite> is a great example of when handling your own output is ideal as the data is already coming back preformatted from  the API.  99% of the time though, data will be raw and unformatted.  As an example, we create <cite>sl example pretty</cite> as such:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ExamplePretty</span><span class="p">(</span><span class="n">CLIRunnable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">usage: sl example pretty [options]</span>
+
+<span class="sd">Pretty output example</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+    <span class="n">action</span> <span class="o">=</span> <span class="s">&#39;pretty&#39;</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="c"># create a table with two columns: col1, col2</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">Table</span><span class="p">([</span><span class="s">&#39;col1&#39;</span><span class="p">,</span> <span class="s">&#39;col2&#39;</span><span class="p">])</span>
+
+        <span class="c"># align the data facing each other</span>
+        <span class="c"># valid values are r, c, l for right, center, left</span>
+        <span class="c"># note, these are suggestions based on the format chosen by the user</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">align</span><span class="p">[</span><span class="s">&#39;col1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;r&#39;</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">align</span><span class="p">[</span><span class="s">&#39;col2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;l&#39;</span>
+
+        <span class="c"># add rows</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">add_row</span><span class="p">([</span><span class="s">&#39;test&#39;</span><span class="p">,</span> <span class="s">&#39;test&#39;</span><span class="p">])</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">add_row</span><span class="p">([</span><span class="s">&#39;test2&#39;</span><span class="p">,</span> <span class="s">&#39;test2&#39;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">t</span>
+</pre></div>
+</div>
+<p>Which gives us</p>
+<div class="highlight-python"><pre>$ sl example pretty
+:.......:.......:
+:  col1 : col2  :
+:.......:.......:
+:  test : test  :
+: test2 : test2 :
+:.......:.......:
+
+$ sl example pretty --format raw
+ test   test
+ test2  test2</pre>
+</div>
+<p>Formatting of the data represented in the table is actually controlled upstream from the CLIRunnable&#8217;s making supporting more data formats in the future easier.</p>
+</div>
+<div class="section" id="adding-arguments">
+<h2>Adding arguments<a class="headerlink" href="#adding-arguments" title="Permalink to this headline">¶</a></h2>
+<p>Refer to docopt for more complete documentation</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ExampleArgs</span><span class="p">(</span><span class="n">CLIRunnable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">usage: sl example parse [--test] [--this=THIS|--that=THAT]</span>
+<span class="sd">                        (--one|--two) [options]</span>
+
+<span class="sd">Argument parsing example</span>
+
+<span class="sd">Options:</span>
+<span class="sd">  --test  Print different output</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+    <span class="n">action</span> <span class="o">=</span> <span class="s">&#39;parse&#39;</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;--test&#39;</span><span class="p">):</span>
+            <span class="k">print</span> <span class="s">&quot;Just testing, move along...&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;This is fo&#39;realz!&quot;</span>
+
+        <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;--one&#39;</span><span class="p">]:</span>
+            <span class="k">print</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;--two&#39;</span><span class="p">]:</span>
+            <span class="k">print</span> <span class="mi">2</span>
+
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;--this&#39;</span><span class="p">):</span>
+            <span class="k">print</span> <span class="s">&quot;I gots&quot;</span><span class="p">,</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;--this&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;--that&#39;</span><span class="p">):</span>
+            <span class="k">print</span> <span class="s">&quot;you dont have&quot;</span><span class="p">,</span> <span class="n">args</span><span class="p">[</span><span class="s">&#39;--that&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="accessing-the-api">
+<h2>Accessing the API<a class="headerlink" href="#accessing-the-api" title="Permalink to this headline">¶</a></h2>
+<p>API access is available via the first argument of <cite>execute</cite> which will be an initialized copy of <cite>SoftLayer.API.Client</cite>.  Please refer to [using the api](API-Usage) for further details on howto use the <cite>Client</cite> object.</p>
+</div>
+<div class="section" id="confirmations">
+<h2>Confirmations<a class="headerlink" href="#confirmations" title="Permalink to this headline">¶</a></h2>
+<p>All confirmations should be easily bypassed by checking for <cite>args[&#8216;&#8211;really&#8217;]</cite>.  To inject <cite>&#8211;really</cite> add <cite>options = [&#8216;confirm&#8217;]</cite> to the class definition, typically just below <cite>action</cite>.  This ensures that <cite>&#8211;really</cite> is consistent throughout the CLI.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ExampleArgs</span><span class="p">(</span><span class="n">CLIRunnable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">usage: sl example parse [--test] [--this=THIS|--that=THAT]</span>
+<span class="sd">                        (--one|--two) [options]</span>
+
+<span class="sd">Argument parsing example</span>
+
+<span class="sd">Options:</span>
+<span class="sd">  --test  Print different output</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+    <span class="n">action</span> <span class="o">=</span> <span class="s">&#39;parse&#39;</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;confirm&#39;</span><span class="p">]</span>  <span class="c"># confirm adds the &#39;-y|--really&#39; options and help</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>There are two primary confirmation prompts that both leverage <cite>SoftLayer.CLI.valid_response</cite>:</p>
+<ul class="simple">
+<li><cite>SoftLayer.CLI.helpers.confirm</cite></li>
+<li><cite>SoftLayer.CLI.helpers.no_going_back</cite></li>
+</ul>
+<p><cite>no_going_back</cite> accepts a single confirmation parameter that is generally unique to that action.  This is similar to typing in the hostname of a machine you are canceling or some other string that isn&#8217;t reactionary such as &#8220;yes&#8221;, &#8220;just do it&#8221;.  Some good examples would be the ID of the object, a phrase &#8220;I know what I am doing&#8221; or anything of the like.  It returns True, False, or None.  The prompt string is pre-defined.</p>
+<p><cite>confirm</cite> is a lot more flexible in that you can set the prompt string, allowing default values, and such.  But it&#8217;s limited to &#8216;yes&#8217; or &#8216;no&#8217; values.  Returns True, False, or None.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">confirmation</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;--really&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">no_going_back</span><span class="p">(</span><span class="s">&#39;YES&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">confirmation</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="aborting-execution">
+<h2>Aborting execution<a class="headerlink" href="#aborting-execution" title="Permalink to this headline">¶</a></h2>
+<p>When a confirmation fails, you will need to bail out of <cite>execute()</cite>.  Raise a <cite>SoftLayer.CLI.helpers.CLIAbort</cite> with the message for the user as the first parameter.  This will prevent any further execution and properly return the right error code.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="ow">not</span> <span class="n">confirmation</span><span class="p">:</span>
+   <span class="k">raise</span> <span class="n">CLIAbort</span><span class="p">(</span><span class="s">&quot;Aborting. Failed confirmation&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Command-Line Interface Developer Guide</a><ul>
+<li><a class="reference internal" href="#defining-a-module">Defining a module</a></li>
+<li><a class="reference internal" href="#action">Action</a></li>
+<li><a class="reference internal" href="#output">Output</a></li>
+<li><a class="reference internal" href="#adding-arguments">Adding arguments</a></li>
+<li><a class="reference internal" href="#accessing-the-api">Accessing the API</a></li>
+<li><a class="reference internal" href="#confirmations">Confirmations</a></li>
+<li><a class="reference internal" href="#aborting-execution">Aborting execution</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../cli.html"
+                        title="previous chapter">Command-line Interface</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/cli/dev.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../cli.html" title="Command-line Interface"
+             >previous</a> |</li>
+        <li><a href="../index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, SoftLayer Technologies, Inc..
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
