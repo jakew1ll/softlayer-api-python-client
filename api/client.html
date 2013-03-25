@@ -56,8 +56,8 @@
   <div class="section" id="developer-interface">
 <span id="client"></span><h1>Developer Interface<a class="headerlink" href="#developer-interface" title="Permalink to this headline">¶</a></h1>
 <p>This is the primary API client to make API calls. It deals with constructing and executing XML-RPC calls against the SoftLayer API.</p>
-<div class="section" id="client-setup">
-<h2>Client setup<a class="headerlink" href="#client-setup" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
 <p>You can pass in your username and api_key when creating a SoftLayer client instance. However, you can set these in the environmental variables &#8216;SL_USERNAME&#8217; and &#8216;SL_API_KEY&#8217;</p>
 <p>Creating a client instance by passing in the username/api_key:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">SoftLayer</span>
@@ -183,10 +183,18 @@ network.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; The name of the service. E.G. SoftLayer_Account</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; The name of the service. E.G. Account</td>
 </tr>
 </tbody>
 </table>
+<dl class="docutils">
+<dt>Usage:</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span><span class="p">[</span><span class="s">&#39;Account&#39;</span><span class="p">]</span>
+<span class="go">&lt;Service: Account&gt;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -712,7 +720,7 @@ from the API.</p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Developer Interface</a><ul>
-<li><a class="reference internal" href="#client-setup">Client setup</a></li>
+<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
 <li><a class="reference internal" href="#making-api-calls">Making API Calls</a></li>
 <li><a class="reference internal" href="#api-reference">API Reference</a><ul>
 <li><a class="reference internal" href="#softlayer-exceptions">SoftLayer.exceptions</a></li>
