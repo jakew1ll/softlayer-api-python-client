@@ -7,15 +7,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>SoftLayer.metadata &mdash; SoftLayer API Python Client 2.1.0 documentation</title>
+    <title>SoftLayer.metadata &mdash; SoftLayer API Python Client 2.2.0 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.1.0',
+        VERSION:     '2.2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="SoftLayer API Python Client 2.1.0 documentation" href="../../index.html" />
+    <link rel="top" title="SoftLayer API Python Client 2.2.0 documentation" href="../../index.html" />
     <link rel="up" title="SoftLayer" href="../SoftLayer.html" /> 
   </head>
   <body>
@@ -37,7 +37,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li>
           <li><a href="../SoftLayer.html" accesskey="U">SoftLayer</a> &raquo;</li> 
       </ul>
@@ -123,6 +123,13 @@
         <span class="k">except</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>  <span class="c"># pragma: no cover</span>
             <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">None</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">content</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+                <span class="k">raise</span> <span class="n">SoftLayerAPIError</span><span class="p">(</span><span class="n">content</span><span class="p">[</span><span class="s">&#39;code&#39;</span><span class="p">],</span> <span class="n">content</span><span class="p">[</span><span class="s">&#39;error&#39;</span><span class="p">])</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">):</span>
+                <span class="k">pass</span>
+
             <span class="k">raise</span> <span class="n">SoftLayerAPIError</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">reason</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">URLError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">SoftLayerAPIError</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">reason</span><span class="p">)</span>
@@ -140,16 +147,20 @@
             <span class="k">raise</span> <span class="n">SoftLayerError</span><span class="p">(</span><span class="s">&#39;Unknown metadata attribute.&#39;</span><span class="p">)</span>
 
         <span class="n">call_details</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attribs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="n">extension</span> <span class="o">=</span> <span class="s">&#39;.json&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">attribs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s">&#39;call&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;UserMetadata&#39;</span><span class="p">:</span>
+            <span class="n">extension</span> <span class="o">=</span> <span class="s">&#39;.txt&#39;</span>
+
         <span class="k">if</span> <span class="n">call_details</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;param_req&#39;</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">param</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">SoftLayerError</span><span class="p">(</span>
                     <span class="s">&#39;Parameter required to get this attribute.&#39;</span><span class="p">)</span>
-            <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">.json&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attribs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s">&#39;call&#39;</span><span class="p">],</span> <span class="n">param</span><span class="p">)</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">/</span><span class="si">%s%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attribs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s">&#39;call&#39;</span><span class="p">],</span> <span class="n">param</span><span class="p">,</span> <span class="n">extension</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">.json&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">attribs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s">&#39;call&#39;</span><span class="p">]</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attribs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s">&#39;call&#39;</span><span class="p">],</span> <span class="n">extension</span><span class="p">)</span>
 
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">and</span> <span class="n">extension</span> <span class="o">==</span> <span class="s">&#39;.json&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data</span>
 </div>
@@ -224,7 +235,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li>
           <li><a href="../SoftLayer.html" >SoftLayer</a> &raquo;</li> 
       </ul>

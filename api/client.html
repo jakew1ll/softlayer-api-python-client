@@ -7,15 +7,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Developer Interface &mdash; SoftLayer API Python Client 2.1.0 documentation</title>
+    <title>Developer Interface &mdash; SoftLayer API Python Client 2.2.0 documentation</title>
     
-    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.1.0',
+        VERSION:     '2.2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="SoftLayer API Python Client 2.1.0 documentation" href="../index.html" />
+    <link rel="top" title="SoftLayer API Python Client 2.2.0 documentation" href="../index.html" />
     <link rel="next" title="Managers" href="managers.html" />
     <link rel="prev" title="Installation" href="../install.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="../install.html" title="Installation"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -95,7 +95,7 @@
     <span class="nb">id</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="s">&quot;mask[updates, assignedUser, attachedHardware.datacenter]&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Now add an update to the ticket.</p>
+<p>Now add an update to the ticket with <a class="reference external" href="http://sldn.softlayer.com/reference/services/SoftLayer_Ticket/addUpdate">Ticket.addUpdate</a>. This uses a parameter, which translate to positional arguments in the order that they appear in the API docs.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">update</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s">&#39;Ticket&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">addUpdate</span><span class="p">({</span><span class="s">&#39;entry&#39;</span> <span class="p">:</span> <span class="s">&#39;Hello!&#39;</span><span class="p">},</span> <span class="nb">id</span><span class="o">=</span><span class="mi">123456</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -248,16 +248,10 @@ network.</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>service</strong> &#8211; the name of the SoftLayer API service</li>
 <li><strong>method</strong> &#8211; the method to call on the service</li>
-<li><strong>*args</strong> &#8211; (optional) arguments for the remote call</li>
-<li><strong>id</strong> &#8211; (optional) id for the resource</li>
-<li><strong>mask</strong> &#8211; (optional) object mask</li>
-<li><strong>filter</strong> (<em>dict</em>) &#8211; (optional) filter dict</li>
-<li><strong>headers</strong> (<em>dict</em>) &#8211; (optional) optional XML-RPC headers</li>
-<li><strong>raw_headers</strong> (<em>dict</em>) &#8211; (optional) HTTP transport headers</li>
-<li><strong>limit</strong> (<em>int</em>) &#8211; (optional) return at most this many results</li>
-<li><strong>offset</strong> (<em>int</em>) &#8211; (optional) offset results by this many</li>
-<li><strong>iter</strong> (<em>boolean</em>) &#8211; (optional) if True, returns a generator with the
-results</li>
+<li><strong>*args</strong> &#8211; same optional arguments that <tt class="docutils literal"><span class="pre">Service.call</span></tt> takes</li>
+<li><strong>**kwargs</strong> &#8211; same optional keyword arguments that
+<tt class="docutils literal"><span class="pre">Service.call</span></tt> takes</li>
+<li><strong>service</strong> &#8211; the name of the SoftLayer API service</li>
 </ul>
 </td>
 </tr>
@@ -285,9 +279,9 @@ results</li>
 <li><strong>service</strong> &#8211; the name of the SoftLayer API service</li>
 <li><strong>method</strong> &#8211; the method to call on the service</li>
 <li><strong>chunk</strong> (<em>integer</em>) &#8211; result size for each API call</li>
-<li><strong>*args</strong> &#8211; same optional arguments that <tt class="docutils literal"><span class="pre">Client.call</span></tt> takes</li>
-<li><strong>**kwargs</strong> &#8211; same optional keyword arguments that <tt class="docutils literal"><span class="pre">Client.call</span></tt>
-takes</li>
+<li><strong>*args</strong> &#8211; same optional arguments that <tt class="docutils literal"><span class="pre">Service.call</span></tt> takes</li>
+<li><strong>**kwargs</strong> &#8211; same optional keyword arguments that
+<tt class="docutils literal"><span class="pre">Service.call</span></tt> takes</li>
 </ul>
 </td>
 </tr>
@@ -419,9 +413,16 @@ call&#8217;s returned result</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>method</strong> &#8211; the method to call on the service</li>
-<li><strong>*args</strong> &#8211; same optional arguments that <tt class="docutils literal"><span class="pre">Client.call</span></tt> takes</li>
-<li><strong>**kwargs</strong> &#8211; same optional keyword arguments that <tt class="docutils literal"><span class="pre">Client.call</span></tt>
-takes</li>
+<li><strong>*args</strong> &#8211; (optional) arguments for the remote call</li>
+<li><strong>id</strong> &#8211; (optional) id for the resource</li>
+<li><strong>mask</strong> &#8211; (optional) object mask</li>
+<li><strong>filter</strong> (<em>dict</em>) &#8211; (optional) filter dict</li>
+<li><strong>headers</strong> (<em>dict</em>) &#8211; (optional) optional XML-RPC headers</li>
+<li><strong>raw_headers</strong> (<em>dict</em>) &#8211; (optional) HTTP transport headers</li>
+<li><strong>limit</strong> (<em>int</em>) &#8211; (optional) return at most this many results</li>
+<li><strong>offset</strong> (<em>int</em>) &#8211; (optional) offset results by this many</li>
+<li><strong>iter</strong> (<em>boolean</em>) &#8211; (optional) if True, returns a generator with the
+results</li>
 </ul>
 </td>
 </tr>
@@ -447,9 +448,16 @@ takes</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>method</strong> &#8211; the method to call on the service</li>
-<li><strong>*args</strong> &#8211; same optional arguments that <tt class="docutils literal"><span class="pre">Client.call</span></tt> takes</li>
-<li><strong>**kwargs</strong> &#8211; same optional keyword arguments that <tt class="docutils literal"><span class="pre">Client.call</span></tt>
-takes</li>
+<li><strong>*args</strong> &#8211; (optional) arguments for the remote call</li>
+<li><strong>id</strong> &#8211; (optional) id for the resource</li>
+<li><strong>mask</strong> &#8211; (optional) object mask</li>
+<li><strong>filter</strong> (<em>dict</em>) &#8211; (optional) filter dict</li>
+<li><strong>headers</strong> (<em>dict</em>) &#8211; (optional) optional XML-RPC headers</li>
+<li><strong>raw_headers</strong> (<em>dict</em>) &#8211; (optional) HTTP transport headers</li>
+<li><strong>limit</strong> (<em>int</em>) &#8211; (optional) return at most this many results</li>
+<li><strong>offset</strong> (<em>int</em>) &#8211; (optional) offset results by this many</li>
+<li><strong>iter</strong> (<em>boolean</em>) &#8211; (optional) if True, returns a generator with the
+results</li>
 </ul>
 </td>
 </tr>
@@ -476,9 +484,9 @@ takes</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>method</strong> &#8211; the method to call on the service</li>
 <li><strong>chunk</strong> (<em>integer</em>) &#8211; result size for each API call</li>
-<li><strong>*args</strong> &#8211; same optional arguments that <tt class="docutils literal"><span class="pre">Client.call</span></tt> takes</li>
-<li><strong>**kwargs</strong> &#8211; same optional keyword arguments that <tt class="docutils literal"><span class="pre">Client.call</span></tt>
-takes</li>
+<li><strong>*args</strong> &#8211; same optional arguments that <tt class="docutils literal"><span class="pre">Service.call</span></tt> takes</li>
+<li><strong>**kwargs</strong> &#8211; same optional keyword arguments that
+<tt class="docutils literal"><span class="pre">Service.call</span></tt> takes</li>
 </ul>
 </td>
 </tr>
@@ -777,7 +785,7 @@ from the API.</p>
         <li class="right" >
           <a href="../install.html" title="Installation"
              >previous</a> |</li>
-        <li><a href="../index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

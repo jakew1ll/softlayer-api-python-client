@@ -7,15 +7,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>SoftLayer.API &mdash; SoftLayer API Python Client 2.1.0 documentation</title>
+    <title>SoftLayer.API &mdash; SoftLayer API Python Client 2.2.0 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.1.0',
+        VERSION:     '2.2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="SoftLayer API Python Client 2.1.0 documentation" href="../../index.html" />
+    <link rel="top" title="SoftLayer API Python Client 2.2.0 documentation" href="../../index.html" />
     <link rel="up" title="SoftLayer" href="../SoftLayer.html" /> 
   </head>
   <body>
@@ -37,7 +37,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li>
           <li><a href="../SoftLayer.html" accesskey="U">SoftLayer</a> &raquo;</li> 
       </ul>
@@ -237,40 +237,25 @@
     <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Get a SoftLayer Service.</span>
 
-<span class="sd">        :param name: The name of the service. E.G. SoftLayer_Account</span>
+<span class="sd">        :param name: The name of the service. E.G. Account</span>
+
+<span class="sd">        Usage:</span>
+<span class="sd">            &gt;&gt;&gt; client[&#39;Account&#39;]</span>
+<span class="sd">            &lt;Service: Account&gt;</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span><span class="p">):</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span> <span class="o">+</span> <span class="n">name</span>
         <span class="k">return</span> <span class="n">Service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Perform a SoftLayer API call.</span>
-
-<span class="sd">        :param service: the name of the SoftLayer API service</span>
-<span class="sd">        :param method: the method to call on the service</span>
-<span class="sd">        :param \*args: same optional arguments that ``Client.call`` takes</span>
-<span class="sd">        :param \*\*kwargs: same optional keyword arguments that ``Client.call``</span>
-<span class="sd">                           takes</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Make a SoftLayer API call</span>
 
 <span class="sd">        :param service: the name of the SoftLayer API service</span>
 <span class="sd">        :param method: the method to call on the service</span>
-<span class="sd">        :param \*args: (optional) arguments for the remote call</span>
-<span class="sd">        :param id: (optional) id for the resource</span>
-<span class="sd">        :param mask: (optional) object mask</span>
-<span class="sd">        :param dict filter: (optional) filter dict</span>
-<span class="sd">        :param dict headers: (optional) optional XML-RPC headers</span>
-<span class="sd">        :param dict raw_headers: (optional) HTTP transport headers</span>
-<span class="sd">        :param int limit: (optional) return at most this many results</span>
-<span class="sd">        :param int offset: (optional) offset results by this many</span>
-<span class="sd">        :param boolean iter: (optional) if True, returns a generator with the</span>
-<span class="sd">                             results</span>
+<span class="sd">        :param \*args: same optional arguments that ``Service.call`` takes</span>
+<span class="sd">        :param \*\*kwargs: same optional keyword arguments that</span>
+<span class="sd">                           ``Service.call`` takes</span>
+
+<span class="sd">        :param service: the name of the SoftLayer API service</span>
 
 <span class="sd">        Usage:</span>
 <span class="sd">            &gt;&gt;&gt; client[&#39;Account&#39;].getVirtualGuests(mask=&quot;id&quot;, limit=10)</span>
@@ -279,6 +264,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;iter&#39;</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_call</span><span class="p">(</span><span class="n">service</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">service</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span><span class="p">):</span>
+            <span class="n">service</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span> <span class="o">+</span> <span class="n">service</span>
 
         <span class="n">objectid</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">)</span>
         <span class="n">objectmask</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;mask&#39;</span><span class="p">)</span>
@@ -325,6 +313,8 @@
                              <span class="n">http_headers</span><span class="o">=</span><span class="n">http_headers</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
                              <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
 
+    <span class="n">__call__</span> <span class="o">=</span> <span class="n">call</span>
+
     <span class="k">def</span> <span class="nf">iter_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span>
                   <span class="n">chunk</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; A generator that deals with paginating through results.</span>
@@ -332,9 +322,9 @@
 <span class="sd">        :param service: the name of the SoftLayer API service</span>
 <span class="sd">        :param method: the method to call on the service</span>
 <span class="sd">        :param integer chunk: result size for each API call</span>
-<span class="sd">        :param \*args: same optional arguments that ``Client.call`` takes</span>
-<span class="sd">        :param \*\*kwargs: same optional keyword arguments that ``Client.call``</span>
-<span class="sd">                           takes</span>
+<span class="sd">        :param \*args: same optional arguments that ``Service.call`` takes</span>
+<span class="sd">        :param \*\*kwargs: same optional keyword arguments that</span>
+<span class="sd">                           ``Service.call`` takes</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">chunk</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
@@ -442,9 +432,16 @@
         <span class="sd">&quot;&quot;&quot; Make a SoftLayer API call</span>
 
 <span class="sd">        :param method: the method to call on the service</span>
-<span class="sd">        :param \*args: same optional arguments that ``Client.call`` takes</span>
-<span class="sd">        :param \*\*kwargs: same optional keyword arguments that ``Client.call``</span>
-<span class="sd">                         takes</span>
+<span class="sd">        :param \*args: (optional) arguments for the remote call</span>
+<span class="sd">        :param id: (optional) id for the resource</span>
+<span class="sd">        :param mask: (optional) object mask</span>
+<span class="sd">        :param dict filter: (optional) filter dict</span>
+<span class="sd">        :param dict headers: (optional) optional XML-RPC headers</span>
+<span class="sd">        :param dict raw_headers: (optional) HTTP transport headers</span>
+<span class="sd">        :param int limit: (optional) return at most this many results</span>
+<span class="sd">        :param int offset: (optional) offset results by this many</span>
+<span class="sd">        :param boolean iter: (optional) if True, returns a generator with the</span>
+<span class="sd">                             results</span>
 
 <span class="sd">        Usage:</span>
 <span class="sd">            &gt;&gt;&gt; client[&#39;Account&#39;].getVirtualGuests(mask=&quot;id&quot;, limit=10)</span>
@@ -453,14 +450,16 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </div>
+    <span class="n">__call__</span> <span class="o">=</span> <span class="n">call</span>
+
 <div class="viewcode-block" id="Service.iter_call"><a class="viewcode-back" href="../../api/client.html#SoftLayer.API.Service.iter_call">[docs]</a>    <span class="k">def</span> <span class="nf">iter_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; A generator that deals with paginating through results.</span>
 
 <span class="sd">        :param method: the method to call on the service</span>
 <span class="sd">        :param integer chunk: result size for each API call</span>
-<span class="sd">        :param \*args: same optional arguments that ``Client.call`` takes</span>
-<span class="sd">        :param \*\*kwargs: same optional keyword arguments that ``Client.call``</span>
-<span class="sd">                           takes</span>
+<span class="sd">        :param \*args: same optional arguments that ``Service.call`` takes</span>
+<span class="sd">        :param \*\*kwargs: same optional keyword arguments that</span>
+<span class="sd">                           ``Service.call`` takes</span>
 
 <span class="sd">        Usage:</span>
 <span class="sd">            &gt;&gt;&gt; gen = client[&#39;Account&#39;].getVirtualGuests(iter=True)</span>
@@ -473,8 +472,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">iter_call</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </div>
-    <span class="n">__call__</span> <span class="o">=</span> <span class="n">call</span>
-
     <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;__name__&quot;</span><span class="p">,</span> <span class="s">&quot;__bases__&quot;</span><span class="p">]:</span>
             <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s">&quot;&#39;Obj&#39; object has no attribute &#39;</span><span class="si">%s</span><span class="s">&#39;&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
@@ -520,7 +517,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li>
           <li><a href="../SoftLayer.html" >SoftLayer</a> &raquo;</li> 
       </ul>

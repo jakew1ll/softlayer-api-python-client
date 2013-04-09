@@ -7,15 +7,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>SoftLayer.CCI &mdash; SoftLayer API Python Client 2.1.0 documentation</title>
+    <title>SoftLayer.CCI &mdash; SoftLayer API Python Client 2.2.0 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.1.0',
+        VERSION:     '2.2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="SoftLayer API Python Client 2.1.0 documentation" href="../../index.html" />
+    <link rel="top" title="SoftLayer API Python Client 2.2.0 documentation" href="../../index.html" />
     <link rel="up" title="Managers" href="../managers.html" />
     <link rel="next" title="SoftLayer.DNS" href="dns.html" />
     <link rel="prev" title="Managers" href="../managers.html" /> 
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="../managers.html" title="Managers"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li>
           <li><a href="../managers.html" accesskey="U">Managers</a> &raquo;</li> 
       </ul>
     </div>  
@@ -75,12 +75,32 @@
 <dl class="exception">
 <dt id="SoftLayer.CCI.CCICreateMissingRequired">
 <em class="property">exception </em><tt class="descclassname">SoftLayer.CCI.</tt><tt class="descname">CCICreateMissingRequired</tt><a class="reference internal" href="../../_modules/SoftLayer/CCI.html#CCICreateMissingRequired"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.CCI.CCICreateMissingRequired" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="SoftLayer.CCI.CCICreateMissingRequired.args">
+<tt class="descname">args</tt><a class="headerlink" href="#SoftLayer.CCI.CCICreateMissingRequired.args" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="attribute">
+<dt id="SoftLayer.CCI.CCICreateMissingRequired.message">
+<tt class="descname">message</tt><a class="headerlink" href="#SoftLayer.CCI.CCICreateMissingRequired.message" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 <dl class="exception">
 <dt id="SoftLayer.CCI.CCICreateMutuallyExclusive">
 <em class="property">exception </em><tt class="descclassname">SoftLayer.CCI.</tt><tt class="descname">CCICreateMutuallyExclusive</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/CCI.html#CCICreateMutuallyExclusive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.CCI.CCICreateMutuallyExclusive" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="SoftLayer.CCI.CCICreateMutuallyExclusive.args">
+<tt class="descname">args</tt><a class="headerlink" href="#SoftLayer.CCI.CCICreateMutuallyExclusive.args" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="attribute">
+<dt id="SoftLayer.CCI.CCICreateMutuallyExclusive.message">
+<tt class="descname">message</tt><a class="headerlink" href="#SoftLayer.CCI.CCICreateMutuallyExclusive.message" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 <dl class="class">
 <dt id="SoftLayer.CCI.CCIManager">
@@ -169,6 +189,26 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="SoftLayer.CCI.CCIManager.resolve_ids">
+<tt class="descname">resolve_ids</tt><big>(</big><em>identifier</em><big>)</big><a class="headerlink" href="#SoftLayer.CCI.CCIManager.resolve_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes a string and tries to resolve to a list of matching ids. What
+exactly &#8216;identifier&#8217; can be depends on the resolvers</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>identifier</strong> (<em>string</em>) &#8211; identifying string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="SoftLayer.CCI.CCIManager.resolvers">
+<tt class="descname">resolvers</tt><em class="property"> = []</em><a class="headerlink" href="#SoftLayer.CCI.CCIManager.resolvers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="SoftLayer.CCI.CCIManager.verify_create_instance">
 <tt class="descname">verify_create_instance</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/CCI.html#CCIManager.verify_create_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.CCI.CCIManager.verify_create_instance" title="Permalink to this definition">¶</a></dt>
 <dd><p>see _generate_create_dict</p>
@@ -176,7 +216,7 @@
 
 <dl class="method">
 <dt id="SoftLayer.CCI.CCIManager.wait_for_transaction">
-<tt class="descname">wait_for_transaction</tt><big>(</big><em>id</em>, <em>limit</em>, <em>delay=1</em><big>)</big><a class="headerlink" href="#SoftLayer.CCI.CCIManager.wait_for_transaction" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">wait_for_transaction</tt><big>(</big><em>id</em>, <em>limit</em>, <em>delay=1</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/CCI.html#CCIManager.wait_for_transaction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.CCI.CCIManager.wait_for_transaction" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -232,7 +272,7 @@
         <li class="right" >
           <a href="../managers.html" title="Managers"
              >previous</a> |</li>
-        <li><a href="../../index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li>
           <li><a href="../managers.html" >Managers</a> &raquo;</li> 
       </ul>
     </div>
