@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -6,14 +7,14 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>SoftLayer API Python Client &mdash; SoftLayer API Python Client 2.1.0 documentation</title>
+    <title>SoftLayer API Python Client 2.1.0 &mdash; SoftLayer API Python Client 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
+        URL_ROOT:    '',
         VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -48,10 +49,22 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="softlayer-api-python-client">
-<h1>SoftLayer API Python Client<a class="headerlink" href="#softlayer-api-python-client" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="softlayer-api-python-client-version">
+<h1>SoftLayer API Python Client 2.1.0<a class="headerlink" href="#softlayer-api-python-client-version" title="Permalink to this headline">¶</a></h1>
 <p>This is the documentation to SoftLayer&#8217;s Python API Bindings. These bindings use SoftLayer&#8217;s <a class="reference external" href="http://sldn.softlayer.com/article/XML-RPC">XML-RPC interface</a> in order to manage SoftLayer services.</p>
-<p>Release v2.1.0. (<a class="reference internal" href="install.html#install"><em>Installation</em></a>)</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#using-pip">Using Pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#from-source">From Source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="http://sldn.softlayer.com/reference/softlayerapi">SoftLayer API Documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/softlayer/softlayer-api-python-client">Source on Github</a></li>
+<li class="toctree-l1"><a class="reference external" href="http://sldn.softlayer.com/">SoftLayer Developer Network</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://twitter.com/SoftLayerDevs">Twitter</a></li>
+</ul>
+</div>
 <div class="section" id="api-documentation">
 <h2>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">SoftLayer</span>
@@ -63,10 +76,6 @@
 </div>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="install.html#get-the-code">Get the Code</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="api/client.html">Developer Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/client.html#getting-started">Getting Started</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/client.html#making-api-calls">Making API Calls</a></li>
@@ -74,25 +83,14 @@
 <li class="toctree-l2"><a class="reference internal" href="api/client.html#backwards-compatibility">Backwards Compatibility</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="api/managers.html">Managers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/managers/cci.html">SoftLayer.CCI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/managers/dns.html">SoftLayer.DNS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/managers/firewall.html">SoftLayer.firewall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/managers/metadata.html">SoftLayer.metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/managers/ssl.html">SoftLayer.SSL</a></li>
 </ul>
-</div>
-</div>
-<div class="section" id="managers">
-<h2>Managers<a class="headerlink" href="#managers" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">SoftLayer.CCI</span> <span class="kn">import</span> <span class="n">CCIManager</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cci</span> <span class="o">=</span> <span class="n">CCIManager</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">cci</span><span class="o">.</span><span class="n">list_instances</span><span class="p">()</span>
-<span class="go">[...]</span>
-</pre></div>
-</div>
-<p>Managers mask out a lot of the complexities of using the API into classes that provide a simpler interface to various services.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="api/managers/cci.html">SoftLayer.CCI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/managers/dns.html">SoftLayer.DNS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/managers/firewall.html">SoftLayer.firewall</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/managers/metadata.html">SoftLayer.metadata</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/managers/ssl.html">SoftLayer.SSL</a></li>
+</li>
 </ul>
 </div>
 </div>
@@ -144,11 +142,8 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">SoftLayer API Python Client</a><ul>
+<li><a class="reference internal" href="#">SoftLayer API Python Client 2.1.0</a><ul>
 <li><a class="reference internal" href="#api-documentation">API Documentation</a><ul>
-</ul>
-</li>
-<li><a class="reference internal" href="#managers">Managers</a><ul>
 </ul>
 </li>
 <li><a class="reference internal" href="#command-line-interface">Command-Line Interface</a><ul>
@@ -201,7 +196,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, SoftLayer Technologies, Inc..
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

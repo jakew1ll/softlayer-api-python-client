@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Overview: module code &mdash; SoftLayer API Python Client 2.1.0 documentation</title>
+    <title>Managers &mdash; SoftLayer API Python Client 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -24,7 +24,9 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="SoftLayer API Python Client 2.1.0 documentation" href="../index.html" /> 
+    <link rel="top" title="SoftLayer API Python Client 2.1.0 documentation" href="../index.html" />
+    <link rel="next" title="SoftLayer.CCI" href="managers/cci.html" />
+    <link rel="prev" title="Developer Interface" href="client.html" /> 
   </head>
   <body>
     <div class="related">
@@ -36,6 +38,12 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="managers/cci.html" title="SoftLayer.CCI"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="client.html" title="Developer Interface"
+             accesskey="P">previous</a> |</li>
         <li><a href="../index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -45,22 +53,43 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <h1>All modules for which code is available</h1>
-<ul><li><a href="SoftLayer.html">SoftLayer</a></li>
-<ul><li><a href="SoftLayer/API.html">SoftLayer.API</a></li>
-<li><a href="SoftLayer/CCI.html">SoftLayer.CCI</a></li>
-<li><a href="SoftLayer/DNS.html">SoftLayer.DNS</a></li>
-<li><a href="SoftLayer/SSL.html">SoftLayer.SSL</a></li>
-<li><a href="SoftLayer/exceptions.html">SoftLayer.exceptions</a></li>
-<li><a href="SoftLayer/firewall.html">SoftLayer.firewall</a></li>
-<li><a href="SoftLayer/metadata.html">SoftLayer.metadata</a></li>
-</ul></ul>
+  <div class="section" id="managers">
+<span id="id1"></span><h1>Managers<a class="headerlink" href="#managers" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">SoftLayer.CCI</span> <span class="kn">import</span> <span class="n">CCIManager</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cci</span> <span class="o">=</span> <span class="n">CCIManager</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cci</span><span class="o">.</span><span class="n">list_instances</span><span class="p">()</span>
+<span class="go">[...]</span>
+</pre></div>
+</div>
+<p>Managers mask out a lot of the complexities of using the API into classes that provide a simpler interface to various services.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="managers/cci.html">SoftLayer.CCI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managers/dns.html">SoftLayer.DNS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managers/firewall.html">SoftLayer.firewall</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managers/metadata.html">SoftLayer.metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="managers/ssl.html">SoftLayer.SSL</a></li>
+</ul>
+</div>
+</div>
+
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="client.html"
+                        title="previous chapter">Developer Interface</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="managers/cci.html"
+                        title="next chapter">SoftLayer.CCI</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/managers.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -87,6 +116,12 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="managers/cci.html" title="SoftLayer.CCI"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="client.html" title="Developer Interface"
+             >previous</a> |</li>
         <li><a href="../index.html">SoftLayer API Python Client 2.1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
