@@ -78,7 +78,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">client</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">domain</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">[</span><span class="s">&#39;Dns_Domain&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">service</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">[</span><span class="s">&#39;Dns_Domain&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">[</span><span class="s">&#39;Dns_Domain_ResourceRecord&#39;</span><span class="p">]</span>
 
 <div class="viewcode-block" id="DNSManager.list_zones"><a class="viewcode-back" href="../../api/managers/dns.html#SoftLayer.DNS.DNSManager.list_zones">[docs]</a>    <span class="k">def</span> <span class="nf">list_zones</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -89,33 +89,34 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">[</span><span class="s">&#39;Account&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getDomains</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="DNSManager.get_zone"><a class="viewcode-back" href="../../api/managers/dns.html#SoftLayer.DNS.DNSManager.get_zone">[docs]</a>    <span class="k">def</span> <span class="nf">get_zone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Get a domain/zone and its records.</span>
+<div class="viewcode-block" id="DNSManager.get_zone"><a class="viewcode-back" href="../../api/managers/dns.html#SoftLayer.DNS.DNSManager.get_zone">[docs]</a>    <span class="k">def</span> <span class="nf">get_zone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">zone</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get a zone and its records.</span>
 
-<span class="sd">        :param domain: the domain/zone name</span>
+<span class="sd">        :param zone: the zone name</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">domain</span> <span class="o">=</span> <span class="n">domain</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">getByDomainName</span><span class="p">(</span>
-            <span class="n">domain</span><span class="p">,</span>
+        <span class="n">zone</span> <span class="o">=</span> <span class="n">zone</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">getByDomainName</span><span class="p">(</span>
+            <span class="n">zone</span><span class="p">,</span>
             <span class="n">mask</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;resourceRecords&#39;</span><span class="p">:</span> <span class="p">{}})</span>
-        <span class="n">matches</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">domain</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">zone</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">matches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">DNSZoneNotFound</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">DNSZoneNotFound</span><span class="p">(</span><span class="n">zone</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="DNSManager.create_zone"><a class="viewcode-back" href="../../api/managers/dns.html#SoftLayer.DNS.DNSManager.create_zone">[docs]</a>    <span class="k">def</span> <span class="nf">create_zone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">serial</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Create a zone for the specified domain.</span>
+<div class="viewcode-block" id="DNSManager.create_zone"><a class="viewcode-back" href="../../api/managers/dns.html#SoftLayer.DNS.DNSManager.create_zone">[docs]</a>    <span class="k">def</span> <span class="nf">create_zone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">zone</span><span class="p">,</span> <span class="n">serial</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create a zone for the specified zone.</span>
 
-<span class="sd">        :param domain: the domain/zone name to create</span>
+<span class="sd">        :param zone: the zone name to create</span>
 <span class="sd">        :param serial: serial value on the zone (default: strftime(%Y%m%d01))</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">createObject</span><span class="p">({</span>
-            <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="n">domain</span><span class="p">,</span>
-            <span class="s">&#39;serial&#39;</span><span class="p">:</span> <span class="n">serial</span> <span class="ow">or</span> <span class="n">strftime</span><span class="p">(</span><span class="s">&#39;%Y%m</span><span class="si">%d</span><span class="s">01&#39;</span><span class="p">)})</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">createObject</span><span class="p">({</span>
+            <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="n">zone</span><span class="p">,</span>
+            <span class="s">&#39;serial&#39;</span><span class="p">:</span> <span class="n">serial</span> <span class="ow">or</span> <span class="n">strftime</span><span class="p">(</span><span class="s">&#39;%Y%m</span><span class="si">%d</span><span class="s">01&#39;</span><span class="p">),</span>
+            <span class="s">&quot;resourceRecords&quot;</span><span class="p">:</span> <span class="p">{}})</span>
 </div>
 <div class="viewcode-block" id="DNSManager.delete_zone"><a class="viewcode-back" href="../../api/managers/dns.html#SoftLayer.DNS.DNSManager.delete_zone">[docs]</a>    <span class="k">def</span> <span class="nf">delete_zone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Delete a zone by its ID.</span>
@@ -123,7 +124,7 @@
 <span class="sd">        :param integer id: the zone ID to delete</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">deleteObject</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">deleteObject</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="DNSManager.edit_zone"><a class="viewcode-back" href="../../api/managers/dns.html#SoftLayer.DNS.DNSManager.edit_zone">[docs]</a>    <span class="k">def</span> <span class="nf">edit_zone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">zone</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Update an existing zone with the options provided. The provided</span>
@@ -133,12 +134,12 @@
 <span class="sd">        :param dict zone: the zone to update</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">editObject</span><span class="p">(</span><span class="n">zone</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">editObject</span><span class="p">(</span><span class="n">zone</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="DNSManager.create_record"><a class="viewcode-back" href="../../api/managers/dns.html#SoftLayer.DNS.DNSManager.create_record">[docs]</a>    <span class="k">def</span> <span class="nf">create_record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">record</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">ttl</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Create a resource record on a domain.</span>
 
-<span class="sd">        :param integer id: the domain&#39;s ID</span>
+<span class="sd">        :param integer id: the zone&#39;s ID</span>
 <span class="sd">        :param record: the name of the record to add</span>
 <span class="sd">        :param type: the type of record (A, AAAA, CNAME, MX, SRV, TXT, etc.)</span>
 <span class="sd">        :param data: the record&#39;s value</span>
@@ -160,16 +161,16 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">deleteObject</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">recordid</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="DNSManager.search_record"><a class="viewcode-back" href="../../api/managers/dns.html#SoftLayer.DNS.DNSManager.search_record">[docs]</a>    <span class="k">def</span> <span class="nf">search_record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Search for records on a domain that match a specific name.</span>
+<div class="viewcode-block" id="DNSManager.search_record"><a class="viewcode-back" href="../../api/managers/dns.html#SoftLayer.DNS.DNSManager.search_record">[docs]</a>    <span class="k">def</span> <span class="nf">search_record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">zone</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Search for records on a zone that match a specific name.</span>
 <span class="sd">        Useful for validating whether a record exists or that it has the</span>
 <span class="sd">        correct value.</span>
 
-<span class="sd">        :param domain: the domain/zone name in which to search.</span>
+<span class="sd">        :param zone: the zone name in which to search.</span>
 <span class="sd">        :param record: the record name to search for</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">rrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_zone</span><span class="p">(</span><span class="n">domain</span><span class="p">)[</span><span class="s">&#39;resourceRecords&#39;</span><span class="p">]</span>
+        <span class="n">rrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_zone</span><span class="p">(</span><span class="n">zone</span><span class="p">)[</span><span class="s">&#39;resourceRecords&#39;</span><span class="p">]</span>
         <span class="n">records</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s">&#39;host&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">record</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">rrs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">records</span>
 </div>
@@ -186,10 +187,10 @@
 <div class="viewcode-block" id="DNSManager.dump_zone"><a class="viewcode-back" href="../../api/managers/dns.html#SoftLayer.DNS.DNSManager.dump_zone">[docs]</a>    <span class="k">def</span> <span class="nf">dump_zone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Retrieve a zone dump in BIND format.</span>
 
-<span class="sd">        :param integer id: The zone/domain ID to dump</span>
+<span class="sd">        :param integer id: The zone ID to dump</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">getZoneFileContents</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">getZoneFileContents</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>

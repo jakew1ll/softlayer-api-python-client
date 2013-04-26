@@ -142,7 +142,7 @@
 <h2>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="SoftLayer.Client">
-<em class="property">class </em><tt class="descclassname">SoftLayer.</tt><tt class="descname">Client</tt><big>(</big><em>service_name=None</em>, <em>id=None</em>, <em>username=None</em>, <em>api_key=None</em>, <em>endpoint_url=None</em>, <em>timeout=None</em>, <em>verbose=False</em><big>)</big><a class="headerlink" href="#SoftLayer.Client" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">SoftLayer.</tt><tt class="descname">Client</tt><big>(</big><em>service_name=None</em>, <em>id=None</em>, <em>username=None</em>, <em>api_key=None</em>, <em>endpoint_url=None</em>, <em>timeout=None</em>, <em>verbose=False</em>, <em>auth=None</em><big>)</big><a class="headerlink" href="#SoftLayer.Client" title="Permalink to this definition">¶</a></dt>
 <dd><p>A SoftLayer API client.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -162,6 +162,8 @@ Set this to API_PRIVATE_ENDPOINT to connect via SoftLayer&#8217;s private
 network.</li>
 <li><strong>timeout</strong> (<em>integer</em>) &#8211; timeout for API requests</li>
 <li><strong>verbose</strong> (<em>boolean</em>) &#8211; prints details about every HTTP request if true</li>
+<li><strong>auth</strong> &#8211; an object which responds to get_headers() to be inserted into
+the xml-rpc headers. Example: <cite>BasicAuthentication</cite></li>
 </ul>
 </td>
 </tr>
