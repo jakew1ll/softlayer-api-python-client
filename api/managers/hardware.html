@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SoftLayer.hardware &mdash; SoftLayer API Python Client 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SoftLayer API Python Client 2.2.0 documentation" href="../../index.html" />
+    <link rel="up" title="Managers" href="../managers.html" />
+    <link rel="next" title="SoftLayer.metadata" href="metadata.html" />
+    <link rel="prev" title="SoftLayer.firewall" href="firewall.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="metadata.html" title="SoftLayer.metadata"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="firewall.html" title="SoftLayer.firewall"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li>
+          <li><a href="../managers.html" accesskey="U">Managers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-SoftLayer.managers.hardware"><span id="hardware"></span></span><div class="section" id="softlayer-hardware">
+<h1>SoftLayer.hardware<a class="headerlink" href="#softlayer-hardware" title="Permalink to this headline">¶</a></h1>
+<p>Hardware Manager/helpers</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body"><ol class="first loweralpha simple" start="3">
+<li>2013, SoftLayer Technologies, Inc. All rights reserved.</li>
+</ol>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body"><p class="first last">BSD, see LICENSE for more details.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="SoftLayer.managers.hardware.HardwareManager">
+<em class="property">class </em><tt class="descclassname">SoftLayer.managers.hardware.</tt><tt class="descname">HardwareManager</tt><big>(</big><em>client</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/managers/hardware.html#HardwareManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.managers.hardware.HardwareManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manages hardware devices.</p>
+<dl class="method">
+<dt id="SoftLayer.managers.hardware.HardwareManager.get_hardware">
+<tt class="descname">get_hardware</tt><big>(</big><em>id</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/managers/hardware.html#HardwareManager.get_hardware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.managers.hardware.HardwareManager.get_hardware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get details about a hardware device</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>integer</em>) &#8211; the hardware ID</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="SoftLayer.managers.hardware.HardwareManager.list_hardware">
+<tt class="descname">list_hardware</tt><big>(</big><em>tags=None</em>, <em>hostname=None</em>, <em>domain=None</em>, <em>datacenter=None</em>, <em>nic_speed=None</em>, <em>public_ip=None</em>, <em>private_ip=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/managers/hardware.html#HardwareManager.list_hardware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.managers.hardware.HardwareManager.list_hardware" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all hardware.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>tags</strong> (<em>list</em>) &#8211; filter based on tags</li>
+<li><strong>hostname</strong> (<em>string</em>) &#8211; filter based on hostname</li>
+<li><strong>domain</strong> (<em>string</em>) &#8211; filter based on domain</li>
+<li><strong>datacenter</strong> (<em>string</em>) &#8211; filter based on datacenter</li>
+<li><strong>nic_speed</strong> (<em>integer</em>) &#8211; filter based on network speed (in MBPS)</li>
+<li><strong>public_ip</strong> (<em>string</em>) &#8211; filter based on public ip address</li>
+<li><strong>private_ip</strong> (<em>string</em>) &#8211; filter based on private ip address</li>
+<li><strong>**kwargs</strong> (<em>dict</em>) &#8211; response-level arguments (limit, offset, etc.)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="SoftLayer.managers.hardware.HardwareManager.reload">
+<tt class="descname">reload</tt><big>(</big><em>id</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/managers/hardware.html#HardwareManager.reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.managers.hardware.HardwareManager.reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform an OS reload of a server with its current configuration.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>integer</em>) &#8211; the instance ID to reload</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="SoftLayer.managers.hardware.HardwareManager.resolve_ids">
+<tt class="descname">resolve_ids</tt><big>(</big><em>identifier</em><big>)</big><a class="headerlink" href="#SoftLayer.managers.hardware.HardwareManager.resolve_ids" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Takes a string and tries to resolve to a list of matching ids. What</dt>
+<dd>exactly &#8216;identifier&#8217; can be depends on the resolvers</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>identifier</strong> (<em>string</em>) &#8211; identifying string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="SoftLayer.managers.hardware.HardwareManager.resolvers">
+<tt class="descname">resolvers</tt><em class="property"> = []</em><a class="headerlink" href="#SoftLayer.managers.hardware.HardwareManager.resolvers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="firewall.html"
+                        title="previous chapter">SoftLayer.firewall</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="metadata.html"
+                        title="next chapter">SoftLayer.metadata</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/api/managers/hardware.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="metadata.html" title="SoftLayer.metadata"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="firewall.html" title="SoftLayer.firewall"
+             >previous</a> |</li>
+        <li><a href="../../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li>
+          <li><a href="../managers.html" >Managers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, SoftLayer Technologies, Inc..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

@@ -6,39 +6,40 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>SoftLayer.SSL &mdash; SoftLayer API Python Client 2.2.0 documentation</title>
+    <title>SoftLayer.managers.ssl &mdash; SoftLayer API Python Client 2.2.0 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
+        URL_ROOT:    '../../../',
         VERSION:     '2.2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="SoftLayer API Python Client 2.2.0 documentation" href="../../index.html" />
-    <link rel="up" title="SoftLayer" href="../SoftLayer.html" /> 
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SoftLayer API Python Client 2.2.0 documentation" href="../../../index.html" />
+    <link rel="up" title="SoftLayer.managers" href="../managers.html" /> 
   </head>
   <body>
     <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
+          <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../py-modindex.html" title="Python Module Index"
+          <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li>
-          <li><a href="../SoftLayer.html" accesskey="U">SoftLayer</a> &raquo;</li> 
+        <li><a href="../../../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../SoftLayer.html" >SoftLayer</a> &raquo;</li>
+          <li><a href="../managers.html" accesskey="U">SoftLayer.managers</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -47,7 +48,7 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <h1>Source code for SoftLayer.SSL</h1><div class="highlight"><pre>
+  <h1>Source code for SoftLayer.managers.ssl</h1><div class="highlight"><pre>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    SoftLayer.SSL</span>
 <span class="sd">    ~~~~~~~~~~~~~</span>
@@ -56,10 +57,9 @@
 <span class="sd">    :copyright: (c) 2013, SoftLayer Technologies, Inc. All rights reserved.</span>
 <span class="sd">    :license: BSD, see LICENSE for more details.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;SSLManager&quot;</span><span class="p">]</span>
 
 
-<div class="viewcode-block" id="SSLManager"><a class="viewcode-back" href="../../api/managers/ssl.html#SoftLayer.SSL.SSLManager">[docs]</a><span class="k">class</span> <span class="nc">SSLManager</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="SSLManager"><a class="viewcode-back" href="../../../api/managers/ssl.html#SoftLayer.managers.ssl.SSLManager">[docs]</a><span class="k">class</span> <span class="nc">SSLManager</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Manages SSL certificates. &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
@@ -71,7 +71,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">client</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ssl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">[</span><span class="s">&#39;Security_Certificate&#39;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="SSLManager.list_certs"><a class="viewcode-back" href="../../api/managers/ssl.html#SoftLayer.SSL.SSLManager.list_certs">[docs]</a>    <span class="k">def</span> <span class="nf">list_certs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;all&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="SSLManager.list_certs"><a class="viewcode-back" href="../../../api/managers/ssl.html#SoftLayer.managers.ssl.SSLManager.list_certs">[docs]</a>    <span class="k">def</span> <span class="nf">list_certs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;all&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; List all certificates.</span>
 
 <span class="sd">        :param method:  # TODO: explain this param</span>
@@ -88,7 +88,7 @@
         <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ssl</span><span class="p">,</span> <span class="n">methods</span><span class="p">[</span><span class="n">method</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="SSLManager.add_certificate"><a class="viewcode-back" href="../../api/managers/ssl.html#SoftLayer.SSL.SSLManager.add_certificate">[docs]</a>    <span class="k">def</span> <span class="nf">add_certificate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">certificate</span><span class="p">):</span>
+<div class="viewcode-block" id="SSLManager.add_certificate"><a class="viewcode-back" href="../../../api/managers/ssl.html#SoftLayer.managers.ssl.SSLManager.add_certificate">[docs]</a>    <span class="k">def</span> <span class="nf">add_certificate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">certificate</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Creates a new certificate.</span>
 
 <span class="sd">        :param certificate:  # TODO: is this a dict?</span>
@@ -96,7 +96,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ssl</span><span class="o">.</span><span class="n">createObject</span><span class="p">(</span><span class="n">certificate</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="SSLManager.remove_certificate"><a class="viewcode-back" href="../../api/managers/ssl.html#SoftLayer.SSL.SSLManager.remove_certificate">[docs]</a>    <span class="k">def</span> <span class="nf">remove_certificate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<div class="viewcode-block" id="SSLManager.remove_certificate"><a class="viewcode-back" href="../../../api/managers/ssl.html#SoftLayer.managers.ssl.SSLManager.remove_certificate">[docs]</a>    <span class="k">def</span> <span class="nf">remove_certificate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Removes a certificate.</span>
 
 <span class="sd">        :param integer id: a certificate ID to remove</span>
@@ -104,7 +104,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ssl</span><span class="o">.</span><span class="n">deleteObject</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="SSLManager.edit_certificate"><a class="viewcode-back" href="../../api/managers/ssl.html#SoftLayer.SSL.SSLManager.edit_certificate">[docs]</a>    <span class="k">def</span> <span class="nf">edit_certificate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">certificate</span><span class="p">):</span>
+<div class="viewcode-block" id="SSLManager.edit_certificate"><a class="viewcode-back" href="../../../api/managers/ssl.html#SoftLayer.managers.ssl.SSLManager.edit_certificate">[docs]</a>    <span class="k">def</span> <span class="nf">edit_certificate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">certificate</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Updates a certificate with the included options. The provided dict</span>
 <span class="sd">        must include an &#39;id&#39; key and value corresponding to the certificate ID</span>
 <span class="sd">        that should be updated.</span>
@@ -114,7 +114,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ssl</span><span class="o">.</span><span class="n">editObject</span><span class="p">(</span><span class="n">certificate</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">certificate</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">])</span>
 </div>
-<div class="viewcode-block" id="SSLManager.get_certificate"><a class="viewcode-back" href="../../api/managers/ssl.html#SoftLayer.SSL.SSLManager.get_certificate">[docs]</a>    <span class="k">def</span> <span class="nf">get_certificate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<div class="viewcode-block" id="SSLManager.get_certificate"><a class="viewcode-back" href="../../../api/managers/ssl.html#SoftLayer.managers.ssl.SSLManager.get_certificate">[docs]</a>    <span class="k">def</span> <span class="nf">get_certificate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Gets a certificate with the ID specified.</span>
 
 <span class="sd">        :param integer id: the certificate ID to retrieve</span>
@@ -130,7 +130,7 @@
         <div class="sphinxsidebarwrapper">
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
-    <form class="search" action="../../search.html" method="get">
+    <form class="search" action="../../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -149,14 +149,15 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
+          <a href="../../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../../py-modindex.html" title="Python Module Index"
+          <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li>
-          <li><a href="../SoftLayer.html" >SoftLayer</a> &raquo;</li> 
+        <li><a href="../../../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../SoftLayer.html" >SoftLayer</a> &raquo;</li>
+          <li><a href="../managers.html" >SoftLayer.managers</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

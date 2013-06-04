@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -55,7 +54,7 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <span class="target" id="module-SoftLayer.SSL"><span id="ssl"></span></span><div class="section" id="softlayer-ssl">
+  <span class="target" id="module-SoftLayer.managers.ssl"><span id="ssl"></span></span><div class="section" id="softlayer-ssl">
 <h1>SoftLayer.SSL<a class="headerlink" href="#softlayer-ssl" title="Permalink to this headline">¶</a></h1>
 <p>SSL Manager/helpers</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -73,12 +72,12 @@
 </tbody>
 </table>
 <dl class="class">
-<dt id="SoftLayer.SSL.SSLManager">
-<em class="property">class </em><tt class="descclassname">SoftLayer.SSL.</tt><tt class="descname">SSLManager</tt><big>(</big><em>client</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/SSL.html#SSLManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.SSL.SSLManager" title="Permalink to this definition">¶</a></dt>
+<dt id="SoftLayer.managers.ssl.SSLManager">
+<em class="property">class </em><tt class="descclassname">SoftLayer.managers.ssl.</tt><tt class="descname">SSLManager</tt><big>(</big><em>client</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/managers/ssl.html#SSLManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.managers.ssl.SSLManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Manages SSL certificates.</p>
 <dl class="method">
-<dt id="SoftLayer.SSL.SSLManager.add_certificate">
-<tt class="descname">add_certificate</tt><big>(</big><em>certificate</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/SSL.html#SSLManager.add_certificate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.SSL.SSLManager.add_certificate" title="Permalink to this definition">¶</a></dt>
+<dt id="SoftLayer.managers.ssl.SSLManager.add_certificate">
+<tt class="descname">add_certificate</tt><big>(</big><em>certificate</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/managers/ssl.html#SSLManager.add_certificate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.managers.ssl.SSLManager.add_certificate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a new certificate.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -91,8 +90,8 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="SoftLayer.SSL.SSLManager.edit_certificate">
-<tt class="descname">edit_certificate</tt><big>(</big><em>certificate</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/SSL.html#SSLManager.edit_certificate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.SSL.SSLManager.edit_certificate" title="Permalink to this definition">¶</a></dt>
+<dt id="SoftLayer.managers.ssl.SSLManager.edit_certificate">
+<tt class="descname">edit_certificate</tt><big>(</big><em>certificate</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/managers/ssl.html#SSLManager.edit_certificate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.managers.ssl.SSLManager.edit_certificate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates a certificate with the included options. The provided dict
 must include an &#8216;id&#8217; key and value corresponding to the certificate ID
 that should be updated.</p>
@@ -107,8 +106,8 @@ that should be updated.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="SoftLayer.SSL.SSLManager.get_certificate">
-<tt class="descname">get_certificate</tt><big>(</big><em>id</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/SSL.html#SSLManager.get_certificate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.SSL.SSLManager.get_certificate" title="Permalink to this definition">¶</a></dt>
+<dt id="SoftLayer.managers.ssl.SSLManager.get_certificate">
+<tt class="descname">get_certificate</tt><big>(</big><em>id</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/managers/ssl.html#SSLManager.get_certificate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.managers.ssl.SSLManager.get_certificate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a certificate with the ID specified.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -121,8 +120,8 @@ that should be updated.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="SoftLayer.SSL.SSLManager.list_certs">
-<tt class="descname">list_certs</tt><big>(</big><em>method='all'</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/SSL.html#SSLManager.list_certs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.SSL.SSLManager.list_certs" title="Permalink to this definition">¶</a></dt>
+<dt id="SoftLayer.managers.ssl.SSLManager.list_certs">
+<tt class="descname">list_certs</tt><big>(</big><em>method='all'</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/managers/ssl.html#SSLManager.list_certs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.managers.ssl.SSLManager.list_certs" title="Permalink to this definition">¶</a></dt>
 <dd><p>List all certificates.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -135,8 +134,8 @@ that should be updated.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="SoftLayer.SSL.SSLManager.remove_certificate">
-<tt class="descname">remove_certificate</tt><big>(</big><em>id</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/SSL.html#SSLManager.remove_certificate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.SSL.SSLManager.remove_certificate" title="Permalink to this definition">¶</a></dt>
+<dt id="SoftLayer.managers.ssl.SSLManager.remove_certificate">
+<tt class="descname">remove_certificate</tt><big>(</big><em>id</em><big>)</big><a class="reference internal" href="../../_modules/SoftLayer/managers/ssl.html#SSLManager.remove_certificate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#SoftLayer.managers.ssl.SSLManager.remove_certificate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a certificate.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -207,7 +206,7 @@ that should be updated.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2013, SoftLayer Technologies, Inc..
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
     </div>
   </body>
 </html>

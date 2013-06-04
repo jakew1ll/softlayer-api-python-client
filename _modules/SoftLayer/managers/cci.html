@@ -6,39 +6,40 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>SoftLayer.CCI &mdash; SoftLayer API Python Client 2.2.0 documentation</title>
+    <title>SoftLayer.managers.cci &mdash; SoftLayer API Python Client 2.2.0 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
+        URL_ROOT:    '../../../',
         VERSION:     '2.2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="SoftLayer API Python Client 2.2.0 documentation" href="../../index.html" />
-    <link rel="up" title="SoftLayer" href="../SoftLayer.html" /> 
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SoftLayer API Python Client 2.2.0 documentation" href="../../../index.html" />
+    <link rel="up" title="SoftLayer.managers" href="../managers.html" /> 
   </head>
   <body>
     <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
+          <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../../py-modindex.html" title="Python Module Index"
+          <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li>
-          <li><a href="../SoftLayer.html" accesskey="U">SoftLayer</a> &raquo;</li> 
+        <li><a href="../../../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../SoftLayer.html" >SoftLayer</a> &raquo;</li>
+          <li><a href="../managers.html" accesskey="U">SoftLayer.managers</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -47,7 +48,7 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <h1>Source code for SoftLayer.CCI</h1><div class="highlight"><pre>
+  <h1>Source code for SoftLayer.managers.cci</h1><div class="highlight"><pre>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    SoftLayer.CCI</span>
 <span class="sd">    ~~~~~~~~~~~~~</span>
@@ -57,24 +58,13 @@
 <span class="sd">    :license: BSD, see LICENSE for more details.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">socket</span>
-
-<span class="kn">from</span> <span class="nn">SoftLayer.exceptions</span> <span class="kn">import</span> <span class="n">SoftLayerError</span>
-<span class="kn">from</span> <span class="nn">SoftLayer.utils</span> <span class="kn">import</span> <span class="n">NestedDict</span><span class="p">,</span> <span class="n">query_filter</span><span class="p">,</span> <span class="n">IdentifierMixin</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">repeat</span>
 
+<span class="kn">from</span> <span class="nn">SoftLayer.utils</span> <span class="kn">import</span> <span class="n">NestedDict</span><span class="p">,</span> <span class="n">query_filter</span><span class="p">,</span> <span class="n">IdentifierMixin</span>
 
-<div class="viewcode-block" id="CCICreateMissingRequired"><a class="viewcode-back" href="../../api/managers/cci.html#SoftLayer.CCI.CCICreateMissingRequired">[docs]</a><span class="k">class</span> <span class="nc">CCICreateMissingRequired</span><span class="p">(</span><span class="n">SoftLayerError</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="s">&quot;cpu, memory, hostname, and domain are required&quot;</span>
 
-</div>
-<div class="viewcode-block" id="CCICreateMutuallyExclusive"><a class="viewcode-back" href="../../api/managers/cci.html#SoftLayer.CCI.CCICreateMutuallyExclusive">[docs]</a><span class="k">class</span> <span class="nc">CCICreateMutuallyExclusive</span><span class="p">(</span><span class="n">SoftLayerError</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="s">&quot;Can only specify one of:&quot;</span><span class="p">,</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-
-</div>
-<div class="viewcode-block" id="CCIManager"><a class="viewcode-back" href="../../api/managers/cci.html#SoftLayer.CCI.CCIManager">[docs]</a><span class="k">class</span> <span class="nc">CCIManager</span><span class="p">(</span><span class="n">IdentifierMixin</span><span class="p">,</span> <span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="CCIManager"><a class="viewcode-back" href="../../../api/managers/cci.html#SoftLayer.managers.cci.CCIManager">[docs]</a><span class="k">class</span> <span class="nc">CCIManager</span><span class="p">(</span><span class="n">IdentifierMixin</span><span class="p">,</span> <span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Manage CCIs &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">client</span>
@@ -82,7 +72,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">guest</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="s">&#39;Virtual_Guest&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resolvers</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_ids_from_ip</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ids_from_hostname</span><span class="p">]</span>
 
-<div class="viewcode-block" id="CCIManager.list_instances"><a class="viewcode-back" href="../../api/managers/cci.html#SoftLayer.CCI.CCIManager.list_instances">[docs]</a>    <span class="k">def</span> <span class="nf">list_instances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hourly</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">monthly</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">cpus</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+<div class="viewcode-block" id="CCIManager.list_instances"><a class="viewcode-back" href="../../../api/managers/cci.html#SoftLayer.managers.cci.CCIManager.list_instances">[docs]</a>    <span class="k">def</span> <span class="nf">list_instances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hourly</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">monthly</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">cpus</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                        <span class="n">memory</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hostname</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                        <span class="n">local_disk</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">datacenter</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">nic_speed</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                        <span class="n">public_ip</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">private_ip</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -117,7 +107,6 @@
                 <span class="s">&#39;datacenter.name&#39;</span><span class="p">,</span>
                 <span class="s">&#39;activeTransaction.transactionStatus[friendlyName,name]&#39;</span><span class="p">,</span>
                 <span class="s">&#39;status.name&#39;</span><span class="p">,</span>
-                <span class="s">&#39;tagReferences[id,tag[name,id]]&#39;</span><span class="p">,</span>
             <span class="p">])</span>
             <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;mask&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;mask[</span><span class="si">%s</span><span class="s">]&quot;</span> <span class="o">%</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
 
@@ -171,7 +160,7 @@
         <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="n">call</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="CCIManager.get_instance"><a class="viewcode-back" href="../../api/managers/cci.html#SoftLayer.CCI.CCIManager.get_instance">[docs]</a>    <span class="k">def</span> <span class="nf">get_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="CCIManager.get_instance"><a class="viewcode-back" href="../../../api/managers/cci.html#SoftLayer.managers.cci.CCIManager.get_instance">[docs]</a>    <span class="k">def</span> <span class="nf">get_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Get details about a CCI instance</span>
 
 <span class="sd">        :param integer id: the instance ID</span>
@@ -199,6 +188,7 @@
                 <span class="s">&#39;maxMemory&#39;</span><span class="p">,</span>
                 <span class="s">&#39;datacenter.name&#39;</span><span class="p">,</span>
                 <span class="s">&#39;activeTransaction.id&#39;</span><span class="p">,</span>
+                <span class="s">&#39;blockDevices&#39;</span><span class="p">,</span>
                 <span class="s">&#39;blockDeviceTemplateGroup[id, name]&#39;</span><span class="p">,</span>
                 <span class="s">&#39;status.name&#39;</span><span class="p">,</span>
                 <span class="s">&#39;operatingSystem.softwareLicense.&#39;</span>
@@ -211,10 +201,10 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">guest</span><span class="o">.</span><span class="n">getObject</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="CCIManager.get_create_options"><a class="viewcode-back" href="../../api/managers/cci.html#SoftLayer.CCI.CCIManager.get_create_options">[docs]</a>    <span class="k">def</span> <span class="nf">get_create_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CCIManager.get_create_options"><a class="viewcode-back" href="../../../api/managers/cci.html#SoftLayer.managers.cci.CCIManager.get_create_options">[docs]</a>    <span class="k">def</span> <span class="nf">get_create_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">guest</span><span class="o">.</span><span class="n">getCreateObjectOptions</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="CCIManager.cancel_instance"><a class="viewcode-back" href="../../api/managers/cci.html#SoftLayer.CCI.CCIManager.cancel_instance">[docs]</a>    <span class="k">def</span> <span class="nf">cancel_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<div class="viewcode-block" id="CCIManager.cancel_instance"><a class="viewcode-back" href="../../../api/managers/cci.html#SoftLayer.managers.cci.CCIManager.cancel_instance">[docs]</a>    <span class="k">def</span> <span class="nf">cancel_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Cancel an instance immediately, deleting all its data.</span>
 
 <span class="sd">        :param integer id: the instance ID to cancel</span>
@@ -222,7 +212,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">guest</span><span class="o">.</span><span class="n">deleteObject</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="CCIManager.reload_instance"><a class="viewcode-back" href="../../api/managers/cci.html#SoftLayer.CCI.CCIManager.reload_instance">[docs]</a>    <span class="k">def</span> <span class="nf">reload_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<div class="viewcode-block" id="CCIManager.reload_instance"><a class="viewcode-back" href="../../../api/managers/cci.html#SoftLayer.managers.cci.CCIManager.reload_instance">[docs]</a>    <span class="k">def</span> <span class="nf">reload_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Perform an OS reload of an instance with its current configuration.</span>
 
 <span class="sd">        :param integer id: the instance ID to reload</span>
@@ -231,11 +221,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">guest</span><span class="o">.</span><span class="n">reloadCurrentOperatingSystemConfiguration</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
 </div>
     <span class="k">def</span> <span class="nf">_generate_create_dict</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">cpus</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">memory</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hourly</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-        <span class="n">hostname</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">local_disk</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-        <span class="n">datacenter</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">os_code</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">image_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-        <span class="n">private</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">public_vlan</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">private_vlan</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-        <span class="n">userdata</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">nic_speed</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">disks</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">cpus</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">memory</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hourly</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+            <span class="n">hostname</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">local_disk</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+            <span class="n">datacenter</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">os_code</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">image_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+            <span class="n">private</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">public_vlan</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">private_vlan</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+            <span class="n">userdata</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">nic_speed</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">disks</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
 
         <span class="n">required</span> <span class="o">=</span> <span class="p">[</span><span class="n">cpus</span><span class="p">,</span> <span class="n">memory</span><span class="p">,</span> <span class="n">hostname</span><span class="p">,</span> <span class="n">domain</span><span class="p">]</span>
 
@@ -244,11 +234,12 @@
         <span class="p">]</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">required</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">CCICreateMissingRequired</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;cpu, memory, hostname, and domain are required&quot;</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">me</span> <span class="ow">in</span> <span class="n">mutually_exclusive</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">me</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
-                <span class="k">raise</span> <span class="n">CCICreateMutuallyExclusive</span><span class="p">(</span><span class="o">*</span><span class="n">me</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s">&#39;Can only specify one of: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">me</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
 
         <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s">&quot;startCpus&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">cpus</span><span class="p">),</span>
@@ -304,7 +295,7 @@
 
         <span class="k">return</span> <span class="n">data</span>
 
-<div class="viewcode-block" id="CCIManager.wait_for_transaction"><a class="viewcode-back" href="../../api/managers/cci.html#SoftLayer.CCI.CCIManager.wait_for_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="CCIManager.wait_for_transaction"><a class="viewcode-back" href="../../../api/managers/cci.html#SoftLayer.managers.cci.CCIManager.wait_for_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">new_instance</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">repeat</span><span class="p">(</span><span class="nb">id</span><span class="p">)):</span>
             <span class="n">instance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_instance</span><span class="p">(</span><span class="n">new_instance</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">instance</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;activeTransaction&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">)</span> <span class="ow">and</span> \
@@ -316,12 +307,12 @@
 
             <span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="CCIManager.verify_create_instance"><a class="viewcode-back" href="../../api/managers/cci.html#SoftLayer.CCI.CCIManager.verify_create_instance">[docs]</a>    <span class="k">def</span> <span class="nf">verify_create_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="CCIManager.verify_create_instance"><a class="viewcode-back" href="../../../api/managers/cci.html#SoftLayer.managers.cci.CCIManager.verify_create_instance">[docs]</a>    <span class="k">def</span> <span class="nf">verify_create_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; see _generate_create_dict &quot;&quot;&quot;</span>  <span class="c"># TODO: document this</span>
         <span class="n">create_options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_create_dict</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">guest</span><span class="o">.</span><span class="n">generateOrderTemplate</span><span class="p">(</span><span class="n">create_options</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="CCIManager.create_instance"><a class="viewcode-back" href="../../api/managers/cci.html#SoftLayer.CCI.CCIManager.create_instance">[docs]</a>    <span class="k">def</span> <span class="nf">create_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="CCIManager.create_instance"><a class="viewcode-back" href="../../../api/managers/cci.html#SoftLayer.managers.cci.CCIManager.create_instance">[docs]</a>    <span class="k">def</span> <span class="nf">create_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; see _generate_create_dict &quot;&quot;&quot;</span>  <span class="c"># TODO: document this</span>
         <span class="n">create_options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_create_dict</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">guest</span><span class="o">.</span><span class="n">createObject</span><span class="p">(</span><span class="n">create_options</span><span class="p">)</span>
@@ -354,7 +345,7 @@
         <div class="sphinxsidebarwrapper">
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
-    <form class="search" action="../../search.html" method="get">
+    <form class="search" action="../../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -373,14 +364,15 @@
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
+          <a href="../../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../../py-modindex.html" title="Python Module Index"
+          <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li>
-          <li><a href="../SoftLayer.html" >SoftLayer</a> &raquo;</li> 
+        <li><a href="../../../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../SoftLayer.html" >SoftLayer</a> &raquo;</li>
+          <li><a href="../managers.html" >SoftLayer.managers</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

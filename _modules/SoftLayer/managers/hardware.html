@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SoftLayer.managers.hardware &mdash; SoftLayer API Python Client 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SoftLayer API Python Client 2.2.0 documentation" href="../../../index.html" />
+    <link rel="up" title="SoftLayer.managers" href="../managers.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../SoftLayer.html" >SoftLayer</a> &raquo;</li>
+          <li><a href="../managers.html" accesskey="U">SoftLayer.managers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for SoftLayer.managers.hardware</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    SoftLayer.hardware</span>
+<span class="sd">    ~~~~~~~~~~~~~~~~~~</span>
+<span class="sd">    Hardware Manager/helpers</span>
+
+<span class="sd">    :copyright: (c) 2013, SoftLayer Technologies, Inc. All rights reserved.</span>
+<span class="sd">    :license: BSD, see LICENSE for more details.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">from</span> <span class="nn">SoftLayer.utils</span> <span class="kn">import</span> <span class="n">NestedDict</span><span class="p">,</span> <span class="n">query_filter</span><span class="p">,</span> <span class="n">IdentifierMixin</span>
+
+
+<div class="viewcode-block" id="HardwareManager"><a class="viewcode-back" href="../../../api/managers/hardware.html#SoftLayer.managers.hardware.HardwareManager">[docs]</a><span class="k">class</span> <span class="nc">HardwareManager</span><span class="p">(</span><span class="n">IdentifierMixin</span><span class="p">,</span> <span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Manages hardware devices. &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; HardwareManager initialization.</span>
+
+<span class="sd">        :param SoftLayer.API.Client client: an API client instance</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hardware</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">[</span><span class="s">&#39;Hardware_Server&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">account</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">[</span><span class="s">&#39;Account&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resolvers</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_ids_from_ip</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ids_from_hostname</span><span class="p">]</span>
+
+<div class="viewcode-block" id="HardwareManager.list_hardware"><a class="viewcode-back" href="../../../api/managers/hardware.html#SoftLayer.managers.hardware.HardwareManager.list_hardware">[docs]</a>    <span class="k">def</span> <span class="nf">list_hardware</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hostname</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                      <span class="n">datacenter</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">nic_speed</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">public_ip</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                      <span class="n">private_ip</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; List all hardware.</span>
+
+<span class="sd">        :param list tags: filter based on tags</span>
+<span class="sd">        :param string hostname: filter based on hostname</span>
+<span class="sd">        :param string domain: filter based on domain</span>
+<span class="sd">        :param string datacenter: filter based on datacenter</span>
+<span class="sd">        :param integer nic_speed: filter based on network speed (in MBPS)</span>
+<span class="sd">        :param string public_ip: filter based on public ip address</span>
+<span class="sd">        :param string private_ip: filter based on private ip address</span>
+<span class="sd">        :param dict \*\*kwargs: response-level arguments (limit, offset, etc.)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s">&#39;mask&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">items</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span>
+                <span class="s">&#39;id&#39;</span><span class="p">,</span>
+                <span class="s">&#39;hostname&#39;</span><span class="p">,</span>
+                <span class="s">&#39;globalIdentifier&#39;</span><span class="p">,</span>
+                <span class="s">&#39;fullyQualifiedDomainName&#39;</span><span class="p">,</span>
+                <span class="s">&#39;processorCoreAmount&#39;</span><span class="p">,</span>
+                <span class="s">&#39;memoryCapacity&#39;</span><span class="p">,</span>
+                <span class="s">&#39;primaryBackendIpAddress&#39;</span><span class="p">,</span>
+                <span class="s">&#39;primaryIpAddress&#39;</span><span class="p">,</span>
+                <span class="s">&#39;datacenter.name&#39;</span><span class="p">,</span>
+            <span class="p">])</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;mask&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;mask[</span><span class="si">%s</span><span class="s">]&quot;</span> <span class="o">%</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+
+        <span class="n">_filter</span> <span class="o">=</span> <span class="n">NestedDict</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;filter&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{})</span>
+        <span class="k">if</span> <span class="n">tags</span><span class="p">:</span>
+            <span class="n">_filter</span><span class="p">[</span><span class="s">&#39;hardware&#39;</span><span class="p">][</span><span class="s">&#39;tagReferences&#39;</span><span class="p">][</span><span class="s">&#39;tag&#39;</span><span class="p">][</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s">&#39;operation&#39;</span><span class="p">:</span> <span class="s">&#39;in&#39;</span><span class="p">,</span>
+                <span class="s">&#39;options&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;data&#39;</span><span class="p">,</span> <span class="s">&#39;value&#39;</span><span class="p">:</span> <span class="n">tags</span><span class="p">}],</span>
+            <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">hostname</span><span class="p">:</span>
+            <span class="n">_filter</span><span class="p">[</span><span class="s">&#39;hardware&#39;</span><span class="p">][</span><span class="s">&#39;hostname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">query_filter</span><span class="p">(</span><span class="n">hostname</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">domain</span><span class="p">:</span>
+            <span class="n">_filter</span><span class="p">[</span><span class="s">&#39;hardware&#39;</span><span class="p">][</span><span class="s">&#39;domain&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">query_filter</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">datacenter</span><span class="p">:</span>
+            <span class="n">_filter</span><span class="p">[</span><span class="s">&#39;hardware&#39;</span><span class="p">][</span><span class="s">&#39;datacenter&#39;</span><span class="p">][</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> \
+                <span class="n">query_filter</span><span class="p">(</span><span class="n">datacenter</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">nic_speed</span><span class="p">:</span>
+            <span class="n">_filter</span><span class="p">[</span><span class="s">&#39;hardware&#39;</span><span class="p">][</span><span class="s">&#39;networkComponents&#39;</span><span class="p">][</span><span class="s">&#39;maxSpeed&#39;</span><span class="p">]</span> <span class="o">=</span> \
+                <span class="n">query_filter</span><span class="p">(</span><span class="n">nic_speed</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">public_ip</span><span class="p">:</span>
+            <span class="n">_filter</span><span class="p">[</span><span class="s">&#39;hardware&#39;</span><span class="p">][</span><span class="s">&#39;primaryIpAddress&#39;</span><span class="p">]</span> <span class="o">=</span> \
+                <span class="n">query_filter</span><span class="p">(</span><span class="n">public_ip</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">private_ip</span><span class="p">:</span>
+            <span class="n">_filter</span><span class="p">[</span><span class="s">&#39;hardware&#39;</span><span class="p">][</span><span class="s">&#39;primaryBackendIpAddress&#39;</span><span class="p">]</span> <span class="o">=</span> \
+                <span class="n">query_filter</span><span class="p">(</span><span class="n">private_ip</span><span class="p">)</span>
+
+        <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;filter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_filter</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">getHardware</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="HardwareManager.get_hardware"><a class="viewcode-back" href="../../../api/managers/hardware.html#SoftLayer.managers.hardware.HardwareManager.get_hardware">[docs]</a>    <span class="k">def</span> <span class="nf">get_hardware</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get details about a hardware device</span>
+
+<span class="sd">        :param integer id: the hardware ID</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="s">&#39;mask&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">items</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span>
+                <span class="s">&#39;id&#39;</span><span class="p">,</span>
+                <span class="s">&#39;globalIdentifier&#39;</span><span class="p">,</span>
+                <span class="s">&#39;fullyQualifiedDomainName&#39;</span><span class="p">,</span>
+                <span class="s">&#39;hostname&#39;</span><span class="p">,</span>
+                <span class="s">&#39;domain&#39;</span><span class="p">,</span>
+                <span class="s">&#39;provisionDate&#39;</span><span class="p">,</span>
+                <span class="s">&#39;hardwareStatus&#39;</span><span class="p">,</span>
+                <span class="s">&#39;processorCoreAmount&#39;</span><span class="p">,</span>
+                <span class="s">&#39;memoryCapacity&#39;</span><span class="p">,</span>
+                <span class="s">&#39;notes&#39;</span><span class="p">,</span>
+                <span class="s">&#39;primaryBackendIpAddress&#39;</span><span class="p">,</span>
+                <span class="s">&#39;primaryIpAddress&#39;</span><span class="p">,</span>
+                <span class="s">&#39;datacenter.name&#39;</span><span class="p">,</span>
+                <span class="s">&#39;activeTransaction.id&#39;</span><span class="p">,</span>
+                <span class="s">&#39;operatingSystem.softwareLicense.&#39;</span>
+                <span class="s">&#39;softwareDescription[manufacturer,name,version,referenceCode]&#39;</span><span class="p">,</span>
+                <span class="s">&#39;operatingSystem.passwords[username,password]&#39;</span><span class="p">,</span>
+                <span class="s">&#39;billingItem.recurringFee&#39;</span><span class="p">,</span>
+                <span class="s">&#39;tagReferences[id,tag[name,id]]&#39;</span><span class="p">,</span>
+            <span class="p">])</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;mask&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;mask[</span><span class="si">%s</span><span class="s">]&quot;</span> <span class="o">%</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hardware</span><span class="o">.</span><span class="n">getObject</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="HardwareManager.reload"><a class="viewcode-back" href="../../../api/managers/hardware.html#SoftLayer.managers.hardware.HardwareManager.reload">[docs]</a>    <span class="k">def</span> <span class="nf">reload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Perform an OS reload of a server with its current configuration.</span>
+
+<span class="sd">        :param integer id: the instance ID to reload</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hardware</span><span class="o">.</span><span class="n">reloadCurrentOperatingSystemConfiguration</span><span class="p">(</span>
+            <span class="s">&#39;FORCE&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">_get_ids_from_hostname</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hostname</span><span class="p">):</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_hardware</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="n">hostname</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="s">&quot;id&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_get_ids_from_ip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c"># Does it look like an ip address?</span>
+            <span class="n">socket</span><span class="o">.</span><span class="n">inet_aton</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="c"># Find the CCI via ip address. First try public ip, then private</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_hardware</span><span class="p">(</span><span class="n">public_ip</span><span class="o">=</span><span class="n">ip</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="s">&quot;id&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">results</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_hardware</span><span class="p">(</span><span class="n">private_ip</span><span class="o">=</span><span class="n">ip</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="s">&quot;id&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">results</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../SoftLayer.html" >SoftLayer</a> &raquo;</li>
+          <li><a href="../managers.html" >SoftLayer.managers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, SoftLayer Technologies, Inc..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

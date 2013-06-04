@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SoftLayer.managers.dns &mdash; SoftLayer API Python Client 2.2.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2.2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SoftLayer API Python Client 2.2.0 documentation" href="../../../index.html" />
+    <link rel="up" title="SoftLayer.managers" href="../managers.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../SoftLayer.html" >SoftLayer</a> &raquo;</li>
+          <li><a href="../managers.html" accesskey="U">SoftLayer.managers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for SoftLayer.managers.dns</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    SoftLayer.DNS</span>
+<span class="sd">    ~~~~~~~~~~~~~</span>
+<span class="sd">    DNS Manager/helpers</span>
+
+<span class="sd">    :copyright: (c) 2013, SoftLayer Technologies, Inc. All rights reserved.</span>
+<span class="sd">    :license: BSD, see LICENSE for more details.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">strftime</span>
+<span class="kn">from</span> <span class="nn">SoftLayer.exceptions</span> <span class="kn">import</span> <span class="n">DNSZoneNotFound</span>
+
+
+<div class="viewcode-block" id="DNSManager"><a class="viewcode-back" href="../../../api/managers/dns.html#SoftLayer.managers.dns.DNSManager">[docs]</a><span class="k">class</span> <span class="nc">DNSManager</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Manage DNS zones. &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; DNSManager initialization.</span>
+
+<span class="sd">        :param SoftLayer.API.Client client: the client instance</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">service</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">[</span><span class="s">&#39;Dns_Domain&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">[</span><span class="s">&#39;Dns_Domain_ResourceRecord&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="DNSManager.list_zones"><a class="viewcode-back" href="../../../api/managers/dns.html#SoftLayer.managers.dns.DNSManager.list_zones">[docs]</a>    <span class="k">def</span> <span class="nf">list_zones</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Retrieve a list of all DNS zones.</span>
+
+<span class="sd">        :param dict \*\*kwargs: response-level arguments (limit, offset, etc.)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">[</span><span class="s">&#39;Account&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getDomains</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DNSManager.get_zone"><a class="viewcode-back" href="../../../api/managers/dns.html#SoftLayer.managers.dns.DNSManager.get_zone">[docs]</a>    <span class="k">def</span> <span class="nf">get_zone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">zone</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Get a zone and its records.</span>
+
+<span class="sd">        :param zone: the zone name</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">zone</span> <span class="o">=</span> <span class="n">zone</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">getByDomainName</span><span class="p">(</span>
+            <span class="n">zone</span><span class="p">,</span>
+            <span class="n">mask</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;resourceRecords&#39;</span><span class="p">:</span> <span class="p">{}})</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">zone</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">matches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">DNSZoneNotFound</span><span class="p">(</span><span class="n">zone</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DNSManager.create_zone"><a class="viewcode-back" href="../../../api/managers/dns.html#SoftLayer.managers.dns.DNSManager.create_zone">[docs]</a>    <span class="k">def</span> <span class="nf">create_zone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">zone</span><span class="p">,</span> <span class="n">serial</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create a zone for the specified zone.</span>
+
+<span class="sd">        :param zone: the zone name to create</span>
+<span class="sd">        :param serial: serial value on the zone (default: strftime(%Y%m%d01))</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">createObject</span><span class="p">({</span>
+            <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="n">zone</span><span class="p">,</span>
+            <span class="s">&#39;serial&#39;</span><span class="p">:</span> <span class="n">serial</span> <span class="ow">or</span> <span class="n">strftime</span><span class="p">(</span><span class="s">&#39;%Y%m</span><span class="si">%d</span><span class="s">01&#39;</span><span class="p">),</span>
+            <span class="s">&quot;resourceRecords&quot;</span><span class="p">:</span> <span class="p">{}})</span>
+</div>
+<div class="viewcode-block" id="DNSManager.delete_zone"><a class="viewcode-back" href="../../../api/managers/dns.html#SoftLayer.managers.dns.DNSManager.delete_zone">[docs]</a>    <span class="k">def</span> <span class="nf">delete_zone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Delete a zone by its ID.</span>
+
+<span class="sd">        :param integer id: the zone ID to delete</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">deleteObject</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DNSManager.edit_zone"><a class="viewcode-back" href="../../../api/managers/dns.html#SoftLayer.managers.dns.DNSManager.edit_zone">[docs]</a>    <span class="k">def</span> <span class="nf">edit_zone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">zone</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Update an existing zone with the options provided. The provided</span>
+<span class="sd">        dict must include an &#39;id&#39; key and value corresponding to the zone that</span>
+<span class="sd">        should be updated.</span>
+
+<span class="sd">        :param dict zone: the zone to update</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">editObject</span><span class="p">(</span><span class="n">zone</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DNSManager.create_record"><a class="viewcode-back" href="../../../api/managers/dns.html#SoftLayer.managers.dns.DNSManager.create_record">[docs]</a>    <span class="k">def</span> <span class="nf">create_record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">record</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">ttl</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create a resource record on a domain.</span>
+
+<span class="sd">        :param integer id: the zone&#39;s ID</span>
+<span class="sd">        :param record: the name of the record to add</span>
+<span class="sd">        :param type: the type of record (A, AAAA, CNAME, MX, SRV, TXT, etc.)</span>
+<span class="sd">        :param data: the record&#39;s value</span>
+<span class="sd">        :param integer ttl: the TTL or time-to-live value (default: 60)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">createObject</span><span class="p">({</span>
+            <span class="s">&#39;domainId&#39;</span><span class="p">:</span> <span class="nb">id</span><span class="p">,</span>
+            <span class="s">&#39;ttl&#39;</span><span class="p">:</span> <span class="n">ttl</span><span class="p">,</span>
+            <span class="s">&#39;host&#39;</span><span class="p">:</span> <span class="n">record</span><span class="p">,</span>
+            <span class="s">&#39;type&#39;</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span>
+            <span class="s">&#39;data&#39;</span><span class="p">:</span> <span class="n">data</span><span class="p">})</span>
+</div>
+<div class="viewcode-block" id="DNSManager.delete_record"><a class="viewcode-back" href="../../../api/managers/dns.html#SoftLayer.managers.dns.DNSManager.delete_record">[docs]</a>    <span class="k">def</span> <span class="nf">delete_record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recordid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Delete a resource record by its ID.</span>
+
+<span class="sd">        :param integer id: the record&#39;s ID</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">deleteObject</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">recordid</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DNSManager.search_record"><a class="viewcode-back" href="../../../api/managers/dns.html#SoftLayer.managers.dns.DNSManager.search_record">[docs]</a>    <span class="k">def</span> <span class="nf">search_record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">zone</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Search for records on a zone that match a specific name.</span>
+<span class="sd">        Useful for validating whether a record exists or that it has the</span>
+<span class="sd">        correct value.</span>
+
+<span class="sd">        :param zone: the zone name in which to search.</span>
+<span class="sd">        :param record: the record name to search for</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_zone</span><span class="p">(</span><span class="n">zone</span><span class="p">)[</span><span class="s">&#39;resourceRecords&#39;</span><span class="p">]</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s">&#39;host&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">record</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">rrs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">records</span>
+</div>
+<div class="viewcode-block" id="DNSManager.edit_record"><a class="viewcode-back" href="../../../api/managers/dns.html#SoftLayer.managers.dns.DNSManager.edit_record">[docs]</a>    <span class="k">def</span> <span class="nf">edit_record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Update an existing record with the options provided. The provided</span>
+<span class="sd">        dict must include an &#39;id&#39; key and value corresponding to the record</span>
+<span class="sd">        that should be updated.</span>
+
+<span class="sd">        :param dict record: the record to update</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">record</span><span class="o">.</span><span class="n">editObject</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">record</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="DNSManager.dump_zone"><a class="viewcode-back" href="../../../api/managers/dns.html#SoftLayer.managers.dns.DNSManager.dump_zone">[docs]</a>    <span class="k">def</span> <span class="nf">dump_zone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Retrieve a zone dump in BIND format.</span>
+
+<span class="sd">        :param integer id: The zone ID to dump</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="o">.</span><span class="n">getZoneFileContents</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SoftLayer API Python Client 2.2.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../SoftLayer.html" >SoftLayer</a> &raquo;</li>
+          <li><a href="../managers.html" >SoftLayer.managers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, SoftLayer Technologies, Inc..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>
