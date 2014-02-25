@@ -170,7 +170,6 @@ def main(args=sys.argv[1:], env=Environment()):
 
         # Do the thing
         runnable = command(client=client, env=env)
-        print command_args
         data = runnable.execute(command_args)
         if data:
             out_format = command_args.get('--format', 'table')
