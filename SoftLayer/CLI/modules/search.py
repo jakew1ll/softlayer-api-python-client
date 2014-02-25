@@ -19,64 +19,38 @@ from SoftLayer.CLI.helpers import (
 
 class Search(CLIRunnable):
     """
-usage: sl search [--query=QUERY_STRING]
-                   [options]
+usage: sl search [--query=QUERY] [--types=TYPES] [options]
 
-@TODO Add documented options out here
-
+Filters:
+  -Q --query=QUERY      Query for search
+  --types=TYPES         Object types to search for, comma seperated.
 
 Search SoftLayer API objects
 """
     action = None
 
-    @staticmethod
-    def execute(client, args):
-        searchService = SearchManager(client)
+    def execute(self, args):
+        searchService = SearchManager(self.client)
 
         query = args.get('--query')
-        data = {}
+        types = None
 
-        results = searchService.search(query)
+        if args.get('--types'):
+          types = args.get('--types').split(',')
 
-        print str(results)
+        results = searchService.search(query, types)
 
         t = Table([
-            'id', 'datacenter', 'host',
-            'cores', 'memory', 'primary_ip',
-            'backend_ip', 'active_transaction',
+            'id', 'resource type', 'score',
         ])
+
+        for result in results:
+            searchContainerResult = NestedDict(result)
+            t.add_row([
+                searchContainerResult['resource'].get('id') or searchContainerResult['resource'].get('objectId') or blank(),
+                searchContainerResult['resourceType'] or blank(),
+                searchContainerResult['relevanceScore'] or blank(),
+            ])
 
         return t
 
-
-class GetSearchTypes(CLIRunnable):
-    """
-usage: sl search types
-                   [options]
-
-@TODO Add documented options out here
-
-
-Get SoftLayer API object types that are available 
-for search.
-"""
-    action = 'types'
-
-    @staticmethod
-    def execute(client, args):
-        searchService = SearchManager(client)
-
-        query = args.get('--query')
-        data = {}
-
-        results = searchService.search(query)
-
-        print str(results)
-
-        t = Table([
-            'id', 'datacenter', 'host',
-            'cores', 'memory', 'primary_ip',
-            'backend_ip', 'active_transaction',
-        ])
-
-        return t
