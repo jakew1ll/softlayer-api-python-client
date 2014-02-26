@@ -11,8 +11,9 @@ from os import linesep
 import os.path
 
 from SoftLayer import SearchManager
+from SoftLayer.utils import console_input
 from SoftLayer.CLI import (
-    CLIRunnable, Table, no_going_back, confirm, mb_to_gb, listing,
+    CLIRunnable, Table, listing,
     FormattedItem)
 from SoftLayer.CLI.helpers import (
     CLIAbort, ArgumentError, SequentialOutput, NestedDict, blank)
@@ -22,21 +23,29 @@ class Search(CLIRunnable):
 usage: sl search [--query=QUERY] [--types=TYPES] [options]
 
 Filters:
-  -Q --query=QUERY      Query for search
+  -Q --query=QUERY      The search string or query to use. If this is not used a prompt will take the query input.
   --types=TYPES         Object types to search for, comma seperated.
 
 Search SoftLayer API objects
 """
     action = None
+    search_prompt = '\n Search String: '
 
     def execute(self, args):
         searchService = SearchManager(self.client)
 
-        query = args.get('--query')
-        types = None
+        query = None
+        if args.get('--query'):
+            query = args.get('--query')
+        else:
+            query = console_input(self.search_prompt)
 
+        types = None
         if args.get('--types'):
           types = args.get('--types').split(',')
+
+        if query == None:
+            query = '*'
 
         results = searchService.search(query, types)
 
