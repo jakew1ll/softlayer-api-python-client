@@ -25,6 +25,23 @@ TYPE_DEFAULT_MASKS = {
     'SoftLayer_Ticket': [
         'id',
         'title'
+    ],
+    'SoftLayer_Network_Subnet_IpAddress': [
+        'id',
+        'ipAddress'
+    ],
+    'SoftLayer_Network_Vlan': [
+        'id',
+        'primaryRouter.hostname',
+        'vlanNumber'
+    ],
+    'SoftLayer_Network_Application_Delivery_Controller': [
+        'id',
+        'name'
+    ],
+    'SoftLayer_Network_Vlan_Firewall': [
+        'id',
+        'fullyQualifiedDomainName'
     ]
 }
 
@@ -34,7 +51,11 @@ class SearchManager(IdentifierMixin, object):
     type_mapping = {
         'hardware': 'SoftLayer_Hardware',
         'cci': 'SoftLayer_Virtual_Guest',
-        'ticket': 'SoftLayer_Ticket'
+        'ticket': 'SoftLayer_Ticket',
+        'ip_address': 'SoftLayer_Network_Subnet_IpAddress',
+        'vlan': 'SoftLayer_Network_Vlan',
+        'loadbalancer': 'SoftLayer_Network_Application_Delivery_Controller',
+        'firewall': 'SoftLayer_Network_Vlan_Firewall'
     }
 
     """ Manage Search """
@@ -86,11 +107,6 @@ class SearchManager(IdentifierMixin, object):
         return self.type_mapping
 
     # @param translated bool
-    def getSearchTypes(self, translated=False, **kwargs):
-        return None
-
-    # @param query string
-    # @param types string[]
-    def getSearchProperties(self, type, **kwargs):
+    def getSearchTypes(self, translated=True, **kwargs):
         return None
 
