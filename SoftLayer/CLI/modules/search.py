@@ -15,7 +15,7 @@ from SoftLayer.CLI import (
     CLIRunnable, Table, no_going_back, confirm, mb_to_gb, listing,
     FormattedItem)
 from SoftLayer.CLI.helpers import (
-    CLIAbort, ArgumentError, SequentialOutput, NestedDict, blank, resolve_id)
+    CLIAbort, ArgumentError, SequentialOutput, NestedDict, blank)
 
 class Search(CLIRunnable):
     """
@@ -40,17 +40,36 @@ Search SoftLayer API objects
 
         results = searchService.search(query, types)
 
-        t = Table([
-            'id', 'resource type', 'score',
-        ])
+        type_mapping = searchService.getTypeMapping()
 
-        for result in results:
-            searchContainerResult = NestedDict(result)
-            t.add_row([
-                searchContainerResult['resource'].get('id') or searchContainerResult['resource'].get('objectId') or blank(),
-                searchContainerResult['resourceType'] or blank(),
-                searchContainerResult['relevanceScore'] or blank(),
+        return_value = None
+
+        if results:
+            return_value = Table([
+                'Id', 'Resource Type', 'Name', 'Score'
             ])
 
-        return t
+            for result in results:
+                searchContainerResult = NestedDict(result)
+
+                identifier = searchContainerResult['resource'].get('id') or blank()
+                resource_type = searchContainerResult['resourceType'] or blank()
+                score = searchContainerResult['relevanceScore'] or blank()
+                name = blank()
+
+                if resource_type == 'SoftLayer_Hardware':
+                    name = searchContainerResult['resource'].get('fullyQualifiedDomainName')
+                elif resource_type == 'SoftLayer_Virtual_Guest':
+                    name = searchContainerResult['resource'].get('fullyQualifiedDomainName')
+                elif resource_type == 'SoftLayer_Ticket':
+                    name = searchContainerResult['resource'].get('title')
+
+                return_value.add_row([
+                    identifier,
+                    resource_type,
+                    name,
+                    score
+                ])
+
+        return return_value
 
