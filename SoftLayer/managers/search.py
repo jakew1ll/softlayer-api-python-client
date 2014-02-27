@@ -8,10 +8,8 @@
     :license: BSD, see LICENSE for more details.
 """
 import socket
-from time import sleep
-from itertools import repeat
 
-from SoftLayer.utils import NestedDict, query_filter, IdentifierMixin
+from SoftLayer.utils import NestedDict, IdentifierMixin
 
 TYPE_DEFAULT_MASKS = {
     'SoftLayer_Hardware': [

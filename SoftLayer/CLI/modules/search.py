@@ -9,6 +9,7 @@ usage: sl search [<args>...] [options]
 
 from os import linesep
 import os.path
+from textwrap import TextWrapper
 
 from SoftLayer import SearchManager
 from SoftLayer.utils import console_input
@@ -16,20 +17,25 @@ from SoftLayer.CLI import (
     CLIRunnable, Table, listing,
     FormattedItem)
 from SoftLayer.CLI.helpers import (
-    CLIAbort, ArgumentError, SequentialOutput, NestedDict, blank)
+    CLIAbort, ArgumentError, NestedDict, blank)
 
 class Search(CLIRunnable):
     """
-usage: sl search [--query=QUERY] [--types=TYPES] [options]
+usage: 
+sl search [--types=TYPES] [options]
+sl search [--query=QUERY] [--types=TYPES] [options]
 
 Filters:
-  -Q --query=QUERY      The search string or query to use. If this is not used a prompt will take the query input.
+  -Q --query=QUERY      The search string or query to use, must be within quotes. 
   --types=TYPES         Object types to search for, comma seperated.
 
-Search SoftLayer API objects
+Search SoftLayer API object data using plain language DSL. The primary objective 
+is to make it easier to find something. If you just use 'sl search' it will prompt 
+you for a search string to use to search against all available data types.  
 """
     action = None
     search_prompt = '\n Search String: '
+    default_column_width = 60
 
     def execute(self, args):
         searchService = SearchManager(self.client)
@@ -50,21 +56,24 @@ Search SoftLayer API objects
         results = searchService.search(query, types)
 
         type_mapping = searchService.getTypeMapping()
-
-        return_value = None
+        reversed_type_mapping = dict((longer,short) for short,longer in type_mapping.iteritems())
 
         if results:
-            return_value = Table([
-                'Id', 'Resource Type', 'Name', 'Score'
+            results_table = Table([
+                'Id', 'Object Type', 'Name'
             ])
+
+            wrapper = TextWrapper(width=self.default_column_width)
 
             for result in results:
                 searchContainerResult = NestedDict(result)
 
                 identifier = searchContainerResult['resource'].get('id') or blank()
-                resource_type = searchContainerResult['resourceType'] or blank()
-                score = searchContainerResult['relevanceScore'] or blank()
+                resource_type = blank()
                 name = blank()
+
+                if searchContainerResult['resourceType'] in reversed_type_mapping.keys():
+                    resource_type = reversed_type_mapping[searchContainerResult['resourceType']]
 
                 if resource_type == 'SoftLayer_Hardware':
                     name = searchContainerResult['resource'].get('fullyQualifiedDomainName')
@@ -72,13 +81,25 @@ Search SoftLayer API objects
                     name = searchContainerResult['resource'].get('fullyQualifiedDomainName')
                 elif resource_type == 'SoftLayer_Ticket':
                     name = searchContainerResult['resource'].get('title')
+                elif resource_type == 'SoftLayer_Network_Subnet_IpAddress':
+                    name = searchContainerResult['resource'].get('ipAddress')
+                elif resource_type == 'SoftLayer_Network_Vlan':
+                    name = '.'.join([
+                        searchContainerResult['resource'].get('primaryRouter').get('hostname'),
+                        searchContainerResult['resource'].get('vlanNumber')
+                    ])
+                elif resource_type == 'SoftLayer_Network_Application_Delivery_Controller':
+                    name = searchContainerResult['resource'].get('name')
+                elif resource_type == 'SoftLayer_Network_Vlan_Firewall':
+                    name = searchContainerResult['resource'].get('fullyQualifiedDomainName')
 
-                return_value.add_row([
+                results_table.add_row([
                     identifier,
                     resource_type,
-                    name,
-                    score
+                    wrapper.wrap(name)
                 ])
 
-        return return_value
+            return results_table
+
+        raise CLIAbort("No objects found matching: %s" % query)
 
