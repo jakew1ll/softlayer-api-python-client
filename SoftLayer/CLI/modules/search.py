@@ -7,17 +7,14 @@ usage: sl search [<args>...] [options]
 # :license: BSD, see LICENSE for more details.
 # SoftLayer/CLI/modules
 
-from os import linesep
-import os.path
 from textwrap import TextWrapper
-
 from SoftLayer import SearchManager
-from SoftLayer.utils import console_input
+from SoftLayer.utils import (
+    console_input, getSimpleType, getApiType)
 from SoftLayer.CLI import (
-    CLIRunnable, Table, listing,
-    FormattedItem)
+    CLIRunnable, Table)
 from SoftLayer.CLI.helpers import (
-    CLIAbort, ArgumentError, NestedDict, blank)
+    CLIAbort, NestedDict, blank)
 
 class Search(CLIRunnable):
     """
@@ -48,55 +45,53 @@ you for a search string to use to search against all available data types.
 
         types = None
         if args.get('--types'):
-          types = args.get('--types').split(',')
+          simple_types = args.get('--types').split(',')
+          types = [getApiType(x) for x in simple_types]
 
         if query == None:
             query = '*'
 
         results = searchService.search(query, types)
 
-        type_mapping = searchService.getTypeMapping()
-        reversed_type_mapping = dict((longer,short) for short,longer in type_mapping.iteritems())
-
         if results:
             results_table = Table([
-                'Id', 'Object Type', 'Name'
+                'Id', 'Type', 'Name'
             ])
+            results_table.align['Name'] = 'l'
 
-            wrapper = TextWrapper(width=self.default_column_width)
+            wrapper = TextWrapper(width=self.default_column_width, expand_tabs=False)
 
             for result in results:
-                searchContainerResult = NestedDict(result)
+                result = NestedDict(result)
 
-                identifier = searchContainerResult['resource'].get('id') or blank()
-                resource_type = blank()
+                identifier = result['resource'].get('id') or blank()
+                resource_type = getSimpleType(result['resourceType'])
                 name = blank()
-
-                if searchContainerResult['resourceType'] in reversed_type_mapping.keys():
-                    resource_type = reversed_type_mapping[searchContainerResult['resourceType']]
-
-                if resource_type == 'SoftLayer_Hardware':
-                    name = searchContainerResult['resource'].get('fullyQualifiedDomainName')
-                elif resource_type == 'SoftLayer_Virtual_Guest':
-                    name = searchContainerResult['resource'].get('fullyQualifiedDomainName')
-                elif resource_type == 'SoftLayer_Ticket':
-                    name = searchContainerResult['resource'].get('title')
-                elif resource_type == 'SoftLayer_Network_Subnet_IpAddress':
-                    name = searchContainerResult['resource'].get('ipAddress')
-                elif resource_type == 'SoftLayer_Network_Vlan':
+                if resource_type == 'hardware':
+                    name = result['resource'].get('fullyQualifiedDomainName')
+                elif resource_type == 'cci':
+                    name = result['resource'].get('fullyQualifiedDomainName')
+                elif resource_type == 'ticket':
+                    name = result['resource'].get('title')
+                elif resource_type == 'ip_address':
+                    name = result['resource'].get('ipAddress')
+                elif resource_type == 'vlan':
                     name = '.'.join([
-                        searchContainerResult['resource'].get('primaryRouter').get('hostname'),
-                        searchContainerResult['resource'].get('vlanNumber')
+                        result['resource'].get('primaryRouter').get('hostname'),
+                        result['resource'].get('vlanNumber')
                     ])
-                elif resource_type == 'SoftLayer_Network_Application_Delivery_Controller':
-                    name = searchContainerResult['resource'].get('name')
-                elif resource_type == 'SoftLayer_Network_Vlan_Firewall':
-                    name = searchContainerResult['resource'].get('fullyQualifiedDomainName')
+                elif resource_type == 'loadbalancer':
+                    name = result['resource'].get('name')
+                elif resource_type == 'firewall':
+                    name = result['resource'].get('fullyQualifiedDomainName')
+
+                if (name and name != 'NULL') or not args.get('--raw'):
+                    name = wrapper.wrap(name)
 
                 results_table.add_row([
                     identifier,
                     resource_type,
-                    wrapper.wrap(name)
+                    name
                 ])
 
             return results_table
