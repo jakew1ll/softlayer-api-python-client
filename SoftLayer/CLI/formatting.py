@@ -26,21 +26,36 @@ API_TYPE_MAPPING = {
 
 
 def get_simple_type(api_type):
-    type = None
-    type = (k for k,v in API_TYPE_MAPPING.iteritems() if v == api_type).next()
+    """ Given a type returned from the SLAPI get the translated simple type.
+        This should be used for consistent naming in the modules.
+
+    :param string api_type: The name of a object type returned from SLAPI.
+    :returns string: A string that is the simple type name. If there is no 
+                 translation the 'SoftLayer_' is removed from the 
+                 parameter. 
+    """
+    type = list(k for k,v in API_TYPE_MAPPING.iteritems() if v == api_type)
     if type:
-        return type
+        return type.pop(0)
     else:
-        return api_type.replace(api_type, 'SoftLayer_', '')
+        return api_type.replace('SoftLayer_', '')
 
 
 def get_api_type(simple_type):
-    type = None
-    type = (API_TYPE_MAPPING.get(k) for k in API_TYPE_MAPPING.keys() if k == simple_type).next()
+    """ Given a translated simple type get the type used in the SLAPI.
+        This should be used for consistent naming in the modules.
+
+    :param string simple_type: The name of a simple type used in the modules.
+    :returns string: A string that is the name of an object type in the SLAPI. 
+                 If there is no translation the 'SoftLayer_' is added to the
+                 parameter.  
+    """
+    type = list(API_TYPE_MAPPING.get(k) for k in API_TYPE_MAPPING.keys() if k == simple_type)
+    print type
     if type:
-        return type
+        return type.pop(0)
     else:
-        return simple_type
+        return '_'.join(['SoftLayer', simple_type])
 
 
 def format_output(data, fmt='table'):
