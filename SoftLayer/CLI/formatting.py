@@ -15,14 +15,14 @@ from prettytable import PrettyTable, FRAME, NONE
 from SoftLayer.utils import string_types, console_input
 
 API_TYPE_MAPPING = {
-        'hardware': 'SoftLayer_Hardware',
-        'cci': 'SoftLayer_Virtual_Guest',
-        'ticket': 'SoftLayer_Ticket',
-        'ip_address': 'SoftLayer_Network_Subnet_IpAddress',
-        'vlan': 'SoftLayer_Network_Vlan',
-        'loadbalancer': 'SoftLayer_Network_Application_Delivery_Controller',
-        'firewall': 'SoftLayer_Network_Vlan_Firewall'
-    }
+    'hardware': 'SoftLayer_Hardware',
+    'cci': 'SoftLayer_Virtual_Guest',
+    'ticket': 'SoftLayer_Ticket',
+    'ip_address': 'SoftLayer_Network_Subnet_IpAddress',
+    'vlan': 'SoftLayer_Network_Vlan',
+    'loadbalancer': 'SoftLayer_Network_Application_Delivery_Controller',
+    'firewall': 'SoftLayer_Network_Vlan_Firewall'
+}
 
 
 def get_simple_type(api_type):
@@ -30,11 +30,11 @@ def get_simple_type(api_type):
         This should be used for consistent naming in the modules.
 
     :param string api_type: The name of a object type returned from SLAPI.
-    :returns string: A string that is the simple type name. If there is no 
-                 translation the 'SoftLayer_' is removed from the 
-                 parameter. 
+    :returns string: A string that is the simple type name. If there is no
+                 translation the 'SoftLayer_' is removed from the
+                 parameter.
     """
-    type = list(k for k,v in API_TYPE_MAPPING.iteritems() if v == api_type)
+    type = list(k for k, v in API_TYPE_MAPPING.iteritems() if v == api_type)
     if type:
         return type.pop(0)
     else:
@@ -46,9 +46,9 @@ def get_api_type(simple_type):
         This should be used for consistent naming in the modules.
 
     :param string simple_type: The name of a simple type used in the modules.
-    :returns string: A string that is the name of an object type in the SLAPI. 
+    :returns string: A string that is the name of an object type in the SLAPI.
                  If there is no translation the 'SoftLayer_' is added to the
-                 parameter.  
+                 parameter.
     """
     type = list(API_TYPE_MAPPING.get(k) for k in API_TYPE_MAPPING.keys() if k == simple_type)
     print type

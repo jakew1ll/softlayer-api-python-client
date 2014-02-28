@@ -49,11 +49,11 @@ class SearchManager(object):
         self.search_client = client['Search']
 
     def search(self, query, types=None, **kwargs):
-        """ Retrieve a list of objects from SoftLayer_Search::search results 
+        """ Retrieve a list of objects from SoftLayer_Search::search results
         based on the query/search string provided.
 
         :param string query: Query to use for search against API objects.
-        :param list types: List of types to specifically search for, 
+        :param list types: List of types to specifically search for,
                             overriding the default of all data types.
         :param dict \*\*kwargs: response-level arguments (limit, offset, mask, etc.)
         :returns: A list of dictionaries of API object data.
@@ -74,7 +74,7 @@ class SearchManager(object):
 
             for t in types:
                 if t in TYPE_DEFAULT_MASKS.keys():
-                    type_masks.append("resource(%s)[%s]" % (t , ','.join(TYPE_DEFAULT_MASKS.get(t))))
+                    type_masks.append("resource(%s)[%s]" % (t, ','.join(TYPE_DEFAULT_MASKS.get(t))))
 
             # Set the default mask
             kwargs['mask'] = 'mask[%s]' % ','.join(type_masks)

@@ -5,12 +5,12 @@ Search for API data objects
 
 Examples:
     sl search
-    sl search types    
+    sl search types
     sl search -t cci,ticket
     sl search -t cci,hardware -s dal05
 
 The available commands are:
-  None            No command results in a prompt for the search 
+  None            No command results in a prompt for the search
                    string that you want to use for the search query.
   types           List available types to narrow search.
 # """
@@ -22,14 +22,15 @@ from textwrap import TextWrapper
 from SoftLayer import SearchManager
 from SoftLayer.utils import console_input
 from SoftLayer.CLI import (
-    CLIRunnable, 
+    CLIRunnable,
     Table,
-    get_simple_type, 
+    get_simple_type,
     get_api_type,
-    CLIAbort, 
-    NestedDict, 
+    CLIAbort,
+    NestedDict,
     blank
 )
+
 
 class Search(CLIRunnable):
     """
@@ -43,12 +44,12 @@ Examples:
     sl search -t cci,hardware -s dal05
 
 Filters:
-  -s=SEARCH_STRING      The search string or query to use, must be within quotes. 
+  -s=SEARCH_STRING      The search string or query to use, must be within quotes.
   -t --types=TYPES         Object types to search for, comma seperated.
 
-Search SoftLayer API object data using plain language DSL. The primary objective 
-is to make it easier to find something. If you just use 'sl search' it will prompt 
-you for a search string to use to search against all available data types.  
+Search SoftLayer API object data using plain language DSL. The primary objective
+is to make it easier to find something. If you just use 'sl search' it will prompt
+you for a search string to use to search against all available data types.
 """
     action = None
     search_prompt = '\n Search String: '
@@ -72,10 +73,10 @@ you for a search string to use to search against all available data types.
 
         types = None
         if args.get('--types'):
-          simple_types = args.get('--types').split(',')
-          types = [get_api_type(x) for x in simple_types]
+            simple_types = args.get('--types').split(',')
+            types = [get_api_type(x) for x in simple_types]
 
-        if query == None:
+        if query is None:
             query = '*'
 
         results = searchService.search(query, types)
@@ -97,7 +98,7 @@ you for a search string to use to search against all available data types.
                 for field in self.possible_name_properties:
                     if result['resource'].get(field):
                         name = result['resource'].get(field)
-                        break;
+                        break
 
                 if name or not args.get('--raw'):
                     name = wrapper.wrap(name)
@@ -124,7 +125,7 @@ List types available for search.
 Examples:
     sl search types
 
-Get a list of types that are available for search. You can pass these 
+Get a list of types that are available for search. You can pass these
 types to the 'sl search' command to narrow down results.
 """
     action = 'types'
@@ -151,4 +152,3 @@ types to the 'sl search' command to narrow down results.
             return results_table
 
         raise CLIAbort("No types found!")
-
