@@ -10,38 +10,11 @@ import six
 
 UUID_RE = re.compile('^[0-9a-f\-]{36}$', re.I)
 KNOWN_OPERATIONS = ['<=', '>=', '<', '>', '~', '*=', '^=', '$=', '_=', '!~']
-API_TYPE_MAPPING = {
-        'hardware': 'SoftLayer_Hardware',
-        'cci': 'SoftLayer_Virtual_Guest',
-        'ticket': 'SoftLayer_Ticket',
-        'ip_address': 'SoftLayer_Network_Subnet_IpAddress',
-        'vlan': 'SoftLayer_Network_Vlan',
-        'loadbalancer': 'SoftLayer_Network_Application_Delivery_Controller',
-        'firewall': 'SoftLayer_Network_Vlan_Firewall'
-    }
 
 configparser = six.moves.configparser  # pylint: disable=E1101
 console_input = six.moves.input  # pylint: disable=E1101
 string_types = six.string_types
 StringIO = six.StringIO
-
-
-def getSimpleType(api_type):
-    type = None
-    type = (k for k,v in API_TYPE_MAPPING.iteritems() if v == api_type).next()
-    if type:
-        return type
-    else:
-        return api_type.replace(api_type, 'SoftLayer_', '')
-
-
-def getApiType(simple_type):
-    type = None
-    type = (API_TYPE_MAPPING.get(k) for k in API_TYPE_MAPPING.keys() if k == simple_type).next()
-    if type:
-        return type
-    else:
-        return simple_type
 
 
 # Code from http://stackoverflow.com/questions/11700798/python-accessing-values-nested-within-dictionaries  # NOQA

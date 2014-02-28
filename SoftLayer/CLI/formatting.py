@@ -14,6 +14,34 @@ from prettytable import PrettyTable, FRAME, NONE
 
 from SoftLayer.utils import string_types, console_input
 
+API_TYPE_MAPPING = {
+        'hardware': 'SoftLayer_Hardware',
+        'cci': 'SoftLayer_Virtual_Guest',
+        'ticket': 'SoftLayer_Ticket',
+        'ip_address': 'SoftLayer_Network_Subnet_IpAddress',
+        'vlan': 'SoftLayer_Network_Vlan',
+        'loadbalancer': 'SoftLayer_Network_Application_Delivery_Controller',
+        'firewall': 'SoftLayer_Network_Vlan_Firewall'
+    }
+
+
+def get_simple_type(api_type):
+    type = None
+    type = (k for k,v in API_TYPE_MAPPING.iteritems() if v == api_type).next()
+    if type:
+        return type
+    else:
+        return api_type.replace(api_type, 'SoftLayer_', '')
+
+
+def get_api_type(simple_type):
+    type = None
+    type = (API_TYPE_MAPPING.get(k) for k in API_TYPE_MAPPING.keys() if k == simple_type).next()
+    if type:
+        return type
+    else:
+        return simple_type
+
 
 def format_output(data, fmt='table'):
     """ Given some data, will format it for output
