@@ -51,7 +51,6 @@ def get_api_type(simple_type):
                  parameter.
     """
     type = list(API_TYPE_MAPPING.get(k) for k in API_TYPE_MAPPING.keys() if k == simple_type)
-    print type
     if type:
         return type.pop(0)
     else:

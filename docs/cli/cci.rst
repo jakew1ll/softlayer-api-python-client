@@ -1,15 +1,16 @@
-.. _cci_user_docs:
-  
-Working with Cloud Compute Instances
+.. _search_usr_docs:
+
+Working with Search
 ====================================
-Using the SoftLayer portal for ordering Cloud Compute Instances is fine but for a number of reasons it's sometimes to use the command-line. For this, you can use the SoftLayer command-line client to make administrative tasks quicker and easier. This page gives an intro to working with SoftLayer Cloud Compute Instances using the SoftLayer command-line client.
+Using the SoftLayer portal or API to find things/objects and their data is simple if you know where
+to go. If you are having trouble finding the things or have to go through a lot of things, here comes search. The SLAPI provides a search service to search across some of the commonly used data you need to find. This page gives an intro to working with SoftLayer's Search service using the SoftLayer command-line client.
 
 .. note::
 
 	The following assumes that the client is already :ref:`configured with valid SoftLayer credentials<cli>`.
 
 
-First, let's list the current Cloud Compute Instances with `sl cci list`.
+First, let's list the types of things we can search with `sl search types`.
 ::
 
 	$ sl cci list
@@ -151,7 +152,7 @@ When the previous command returns, I know that the Cloud Compute Instance has fi
 There are many other commands to help manage Cloud Compute Instances. To see them all, use `sl help cci`.
 
 ::
-	
+
 	$ sl help cci
 	usage: sl cci [<command>] [<args>...] [options]
 

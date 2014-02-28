@@ -13,7 +13,7 @@ The available commands are:
   None            No command results in a prompt for the search
                    string that you want to use for the search query.
   types           List available types to narrow search.
-# """
+"""
 # :copyright: (c) 2013, SoftLayer Technologies, Inc. All rights reserved.
 # :license: BSD, see LICENSE for more details.
 # SoftLayer/CLI/modules
