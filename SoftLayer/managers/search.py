@@ -4,12 +4,9 @@
     Search Manager/helpers
     SoftLayer/managers/search.py
 
-    :copyright: (c) 2013, SoftLayer Technologies, Inc. All rights reserved.
+    :copyright: (c) 2014, SoftLayer Technologies, Inc. All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
-import socket
-
-from SoftLayer.utils import NestedDict, IdentifierMixin
 
 TYPE_DEFAULT_MASKS = {
     'SoftLayer_Hardware': [
@@ -44,67 +41,53 @@ TYPE_DEFAULT_MASKS = {
 }
 
 
-class SearchManager(IdentifierMixin, object):
-
-    type_mapping = {
-        'hardware': 'SoftLayer_Hardware',
-        'cci': 'SoftLayer_Virtual_Guest',
-        'ticket': 'SoftLayer_Ticket',
-        'ip_address': 'SoftLayer_Network_Subnet_IpAddress',
-        'vlan': 'SoftLayer_Network_Vlan',
-        'loadbalancer': 'SoftLayer_Network_Application_Delivery_Controller',
-        'firewall': 'SoftLayer_Network_Vlan_Firewall'
-    }
+class SearchManager(object):
 
     """ Manage Search """
     def __init__(self, client):
         self.client = client
-        self.searchClient = client['Search']
+        self.search_client = client['Search']
 
-    # @param query string
-    # @param types string[]
     def search(self, query, types=None, **kwargs):
-        """ Retrieve a list of objects from SoftLayer_Search::search results based on the query.
+        """ Retrieve a list of objects from SoftLayer_Search::search results 
+        based on the query/search string provided.
 
-        :param string query: Query to use for search
-        :param list types: List of types to specifically search for, overriding the default of all data types.
-        :param dict \*\*kwargs: response-level arguments (limit, offset, etc.)
+        :param string query: Query to use for search against API objects.
+        :param list types: List of types to specifically search for, 
+                            overriding the default of all data types.
+        :param dict \*\*kwargs: response-level arguments (limit, offset, mask, etc.)
+        :returns: A list of dictionaries of API object data.
 
         """
-
         # Default object types to search against
-        object_types = self.type_mapping.values()
-        # Translate short type overrides, if provided
-        if types:
-            object_types = [
-                self.type_mapping.get(t) for t in types if t in self.type_mapping.keys()
-            ]
+        if not types:
+            types = self.getSearchTypes()
+            # Remove Event Logs, I want to support these in a seperate method
+            types.remove('SoftLayer_Event_Log')
 
         # Add our object types to the query
-        query = '%s _objectType:%s' % (query, ','.join(object_types))
+        query = '%s _objectType:%s' % (query, ','.join(types))
 
         # Set our default masks for object types we are using
         if 'mask' not in kwargs:
             type_masks = []
 
-            for t in object_types:
+            for t in types:
                 if t in TYPE_DEFAULT_MASKS.keys():
                     type_masks.append("resource(%s)[%s]" % (t , ','.join(TYPE_DEFAULT_MASKS.get(t))))
 
             # Set the default mask
             kwargs['mask'] = 'mask[%s]' % ','.join(type_masks)
 
-        # print "Query : \n"
-        # print query
-
-        results = self.searchClient.search(query, **kwargs)
+        results = self.search_client.search(query, **kwargs)
 
         return results
 
-    def getTypeMapping(self):
-        return self.type_mapping
+    def getSearchTypes(self, **kwargs):
+        """ Retrieve a list of object types from SoftLayer_Search::getObjectTypes
 
-    # @param translated bool
-    def getSearchTypes(self, translated=True, **kwargs):
-        return None
+        :returns: A list of strings of API object type names.
 
+        """
+        results = self.search_client.getObjectTypes(**kwargs)
+        return [x.get('name') for x in results]
