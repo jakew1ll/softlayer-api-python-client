@@ -59,11 +59,9 @@ class SearchManager(object):
         :returns: A list of dictionaries of API object data.
 
         """
-        # Default object types to search against
         if not types:
-            types = self.getSearchTypes()
-            # Remove Event Logs, I want to support these in a seperate method
-            types.remove('SoftLayer_Event_Log')
+            # Need to raise error if no types given
+            raise ValueError("Must provide a valid list of types to search on")
 
         # Add our object types to the query
         query = '%s _objectType:%s' % (query, ','.join(types))

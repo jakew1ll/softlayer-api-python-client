@@ -75,6 +75,15 @@ you for a search string to use to search against all available data types.
         if args.get('--types'):
             simple_types = args.get('--types').split(',')
             types = [get_api_type(x) for x in simple_types]
+        else:
+            types = searchService.getSearchTypes()
+            # Remove Event Logs, I want to support these in a seperate method
+            try:
+                types.index('SoftLayer_Event_Log')
+            except ValueError:
+                pass
+            else:
+                types.remove('SoftLayer_Event_Log')
 
         if query is None:
             query = '*'
@@ -142,7 +151,12 @@ types to the 'sl search' command to narrow down results.
             results_table.align['Type'] = 'l'
 
             # Remove Event Logs, I want to support these in a seperate method
-            results.remove('SoftLayer_Event_Log')
+            try:
+                types.index('SoftLayer_Event_Log')
+            except ValueError:
+                pass
+            else:
+                types.remove('SoftLayer_Event_Log')
 
             for result in results:
                 results_table.add_row([
