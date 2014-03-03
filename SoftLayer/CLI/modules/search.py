@@ -152,11 +152,11 @@ types to the 'sl search' command to narrow down results.
 
             # Remove Event Logs, I want to support these in a seperate method
             try:
-                types.index('SoftLayer_Event_Log')
+                results.index('SoftLayer_Event_Log')
             except ValueError:
                 pass
             else:
-                types.remove('SoftLayer_Event_Log')
+                results.remove('SoftLayer_Event_Log')
 
             for result in results:
                 results_table.add_row([
