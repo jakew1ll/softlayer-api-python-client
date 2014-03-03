@@ -31,3 +31,15 @@ class SearchTests(unittest.TestCase):
         )
         for result in results:
             self.assertIn(result['resource'].get('id'), expected_ids)
+
+    def test_get_search_types(self):
+        expected_names = [
+            'SoftLayer_Network_Vlan',
+            'SoftLayer_Network_Vlan_Firewall',
+            'SoftLayer_Event_Log'
+        ]
+
+        results = self.search.get_search_types()
+        self.client['Search'].getObjectTypes.assert_called_once()
+        for result in results:
+            self.assertIn(result, expected_names)
