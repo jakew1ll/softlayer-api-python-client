@@ -76,7 +76,7 @@ you for a search string to use to search against all available data types.
             simple_types = args.get('--types').split(',')
             types = [get_api_type(x) for x in simple_types]
         else:
-            types = searchService.getSearchTypes()
+            types = searchService.get_search_types()
             # Remove Event Logs, I want to support these in a seperate method
             try:
                 types.index('SoftLayer_Event_Log')
@@ -142,7 +142,7 @@ types to the 'sl search' command to narrow down results.
     def execute(self, args):
         searchService = SearchManager(self.client)
 
-        results = searchService.getSearchTypes()
+        results = searchService.get_search_types()
 
         if results:
             results_table = Table([

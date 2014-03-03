@@ -81,7 +81,7 @@ class SearchManager(object):
 
         return results
 
-    def getSearchTypes(self, **kwargs):
+    def get_search_types(self, **kwargs):
         """ Retrieve a list of object types from SoftLayer_Search::getObjectTypes
 
         :returns: A list of strings of API object type names.
