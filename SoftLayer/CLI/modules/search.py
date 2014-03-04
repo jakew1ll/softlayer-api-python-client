@@ -67,9 +67,9 @@ you for a search string to use to search against all available data types.
 
         query = None
         if args.get('-s'):
-            query = args.get('-s')
+            query = args.get('-s').strip()
         else:
-            query = console_input(self.search_prompt)
+            query = console_input(self.search_prompt).strip()
 
         types = None
         if args.get('--types'):
@@ -85,7 +85,7 @@ you for a search string to use to search against all available data types.
             else:
                 types.remove('SoftLayer_Event_Log')
 
-        if query is None:
+        if not query:
             query = '*'
 
         results = searchService.search(query, types)
@@ -109,9 +109,9 @@ you for a search string to use to search against all available data types.
                         name = result['resource'].get(field)
                         break
 
-                if name or not args.get('--raw'):
+                if name and not args.get('--raw'):
                     name = wrapper.wrap(name)
-                else:
+                elif not name:
                     name = blank()
 
                 results_table.add_row([
