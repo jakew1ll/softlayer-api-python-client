@@ -17,7 +17,10 @@ search = [
 	{
 		'resourceType': 'SoftLayer_Ticket',
 		'relevanceScore': '0.04435336',
-		'resource': {'id': 345, 'title': 'MONITORING: Network Monitor Alert'},
+		'resource': {
+			'id': 345,
+			'title': 'MONITORING: Network Monitor Alert A REALLY LONG TITLE FOR ME ------------'
+		},
 		'matchedTerms': ['app1.example.com']
 	}
 ]
